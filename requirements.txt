@@ -1,0 +1,25 @@
+# Telegram Bot
+aiogram==3.13.1
+aiohttp==3.10.5
+aiofiles==24.1.0
+
+# Database
+SQLAlchemy==2.0.35
+aiomysql==0.2.0
+asyncmy==0.2.9
+
+# Image Processing
+Pillow==10.4.0
+
+# Utilities
+python-dotenv==1.0.1
+pytz==2024.2
+
+# Payment (optional)
+yookassa==3.2.0
+
+# Development
+black==24.8.0
+flake8==7.1.1
+pytest==8.3.3
+pytest-asyncio==0.24.0
