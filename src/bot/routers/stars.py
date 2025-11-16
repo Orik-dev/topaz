@@ -60,5 +60,4 @@ async def successful_payment_stars(message: Message, session: AsyncSession, user
     await message.answer(
         f"✅ Оплата успешна!\n\n"
         f"💰 Начислено: {total_gens} ген.\n"
-        f"⚡ Баланс: {int(user.balance)} ген."
-    )
+        f"⚡ Баланс: {int(user.balance)} gen.")

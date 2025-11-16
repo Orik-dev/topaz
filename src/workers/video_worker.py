@@ -6,6 +6,7 @@ from src.vendors.topaz import topaz_client, TopazAPIError
 from src.services.users import UserService
 from src.core.config import settings
 from src.workers.settings import get_redis_settings
+from src.services.pricing import VIDEO_MODELS
 from aiogram import Bot
 import logging
 import json
@@ -16,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 async def process_video_task(ctx: dict, task_id: int, user_telegram_id: int, video_file_id: str):
     """
-    ARQ worker - обработка видео (POLLING!)
+    ARQ worker - обработка видео (с POLLING!)
     """
     bot = Bot(token=settings.BOT_TOKEN)
 
@@ -49,15 +50,11 @@ async def process_video_task(ctx: dict, task_id: int, user_telegram_id: int, vid
 
             # Парсим параметры
             params = json.loads(task.parameters) if task.parameters else {}
-            
-            # Получаем метаданные видео
-            video_info = await bot.get_file(video_file_id)
-            
-            # Создаем запрос (Шаг 1)
             source = params.get("source", {})
             output = params.get("output", {})
             filters = params.get("filters", [])
 
+            # Шаг 1: Создаем запрос
             video_request = await topaz_client.create_video_request(
                 source=source,
                 output=output,
@@ -69,33 +66,33 @@ async def process_video_task(ctx: dict, task_id: int, user_telegram_id: int, vid
             await session.flush()
             await session.commit()
 
-            # Принимаем запрос (Шаг 2)
+            # Шаг 2: Принимаем запрос
             accept_response = await topaz_client.accept_video_request(request_id)
             upload_urls = accept_response.get("uploadUrls", [])
 
             if not upload_urls:
                 raise TopazAPIError("Не получены URL для загрузки")
 
-            # Загружаем видео (Шаг 3)
+            # Шаг 3: Загружаем видео
             upload_url = upload_urls[0].get("url")
             etag = await topaz_client.upload_video(upload_url, video_bytes)
 
-            # Завершаем загрузку (Шаг 4)
+            # Шаг 4: Завершаем загрузку
             await topaz_client.complete_video_upload(
                 request_id=request_id,
                 upload_results=[{"partNum": 1, "eTag": etag}]
             )
 
-            # POLLING статуса (НЕТ вебхуков в Topaz!)
+            # Шаг 5: POLLING статуса
             max_attempts = 360  # 1 час (каждые 10 сек)
             for attempt in range(max_attempts):
                 await asyncio.sleep(10)
 
-                status = await topaz_client.get_video_status(request_id)
-                state = status.get("state")
+                status_data = await topaz_client.get_video_status(request_id)
+                state = status_data.get("state")
 
                 if state == "completed":
-                    download_url = status.get("downloadUrl")
+                    download_url = status_data.get("downloadUrl")
                     task.output_file_url = download_url
 
                     # Списываем генерации ТОЛЬКО после успеха
@@ -103,7 +100,7 @@ async def process_video_task(ctx: dict, task_id: int, user_telegram_id: int, vid
                         session=session,
                         user=user,
                         amount=task.cost,
-                        description=f"Улучшение видео",
+                        description=f"Обработка видео: {task.model}",
                         reference_type="task",
                         reference_id=task.id
                     )
@@ -123,9 +120,11 @@ async def process_video_task(ctx: dict, task_id: int, user_telegram_id: int, vid
                     await session.flush()
                     await session.commit()
 
+                    model_info = VIDEO_MODELS.get(task.model, {})
+                    
                     await bot.send_message(
                         chat_id=user.telegram_id,
-                        text=f"✅ Видео улучшено!\n\n"
+                        text=f"✅ {model_info.get('description', 'Видео улучшено')}!\n\n"
                              f"📥 [Скачать видео]({download_url})\n\n"
                              f"💰 Списано: {int(task.cost)} ген.\n"
                              f"⚡ Баланс: {int(user.balance)} ген.",
@@ -141,7 +140,7 @@ async def process_video_task(ctx: dict, task_id: int, user_telegram_id: int, vid
 
                 # Прогресс
                 if attempt % 6 == 0:  # Каждую минуту
-                    progress = status.get("progress", 0)
+                    progress = status_data.get("progress", 0)
                     logger.info(f"Video task {task_id} progress: {progress}%")
 
             # Timeout
@@ -202,5 +201,5 @@ class WorkerSettings:
     functions = [process_video_task]
     redis_settings = get_redis_settings()
     max_jobs = 3  # Меньше для видео
-    job_timeout = 3600  # 1 час
+    job_timeout = 7200  # 2 часа
     keep_result = 3600

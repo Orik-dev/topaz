@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request, Header
 from aiogram import Bot, Dispatcher
 from aiogram.types import Update
 from src.core.config import settings
-from src.bot.routers import commands, stars
+from src.bot.routers import get_routers
 from src.bot.middlewares import DatabaseMiddleware, UserMiddleware, ClearStateOnCommandMiddleware
 import logging
 
@@ -13,9 +13,8 @@ router = APIRouter(prefix="/tg", tags=["telegram"])
 bot = Bot(token=settings.BOT_TOKEN)
 dp = Dispatcher()
 
-# Register routers
-dp.include_router(commands.router)
-dp.include_router(stars.router)
+# Register all routers
+dp.include_router(get_routers())
 
 # Register middlewares
 dp.message.middleware(ClearStateOnCommandMiddleware())
@@ -31,12 +30,10 @@ async def telegram_webhook(
     x_telegram_bot_api_secret_token: str = Header(None)
 ):
     """Telegram webhook endpoint"""
-    # Verify secret token
     if x_telegram_bot_api_secret_token != settings.WEBHOOK_SECRET:
         logger.warning("Invalid webhook secret token")
         return {"status": "error", "message": "Invalid secret token"}
     
-    # Process update
     update_data = await request.json()
     update = Update(**update_data)
     
