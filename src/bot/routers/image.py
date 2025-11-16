@@ -16,6 +16,7 @@ router = Router()
 @router.message(F.text == "📸 Улучшить фото")
 async def image_enhance_start(message: Message, state: FSMContext):
     """Начало улучшения фото"""
+    await state.clear()  # ✅ Очищаем состояние
     await message.answer(
         "📸 Отправьте фото для улучшения",
         reply_markup=cancel_keyboard()
@@ -34,6 +35,12 @@ async def image_received(message: Message, state: FSMContext):
         reply_markup=image_models_keyboard()
     )
     await state.set_state(ImageStates.selecting_model)
+
+
+@router.message(ImageStates.waiting_for_image)
+async def wrong_content_type(message: Message):
+    """Неправильный тип контента"""
+    await message.answer("❌ Пожалуйста, отправьте фото")
 
 
 @router.callback_query(ImageStates.selecting_model, F.data.startswith("img_model:"))
@@ -55,7 +62,7 @@ async def process_image_model(
     
     if user.balance < cost:
         await callback.answer(
-            f"❌ Недостаточно генераций! Требуется: {cost}",
+            f"❌ Недостаточно генераций! Требуется: {int(cost)}\n\nИспользуйте /buy",
             show_alert=True
         )
         await state.clear()
@@ -65,10 +72,6 @@ async def process_image_model(
     
     data = await state.get_data()
     file_id = data.get("file_id")
-    
-    # Скачиваем фото
-    file = await callback.bot.get_file(file_id)
-    image_data = await callback.bot.download_file(file.file_path)
     
     # Создаем задачу
     task = await GenerationService.create_task(
@@ -90,8 +93,10 @@ async def process_image_model(
     await GenerationService.enqueue_image_task(
         task_id=task.id,
         user_telegram_id=user.telegram_id,
-        image_data=image_data.read()
+        image_file_id=file_id
     )
     
     await state.clear()
     await callback.answer()
+    
+    logger.info(f"Image task created: task_id={task.id}, user={user.telegram_id}, model={model_name}")

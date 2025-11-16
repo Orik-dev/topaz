@@ -18,7 +18,7 @@ router = Router()
 
 
 @router.message(Command("buy"))
-@router.message(F.text == "💳 Купить")
+@router.message(F.text == "💳 Пополнить")
 @router.callback_query(F.data == "buy")
 async def cmd_buy(event: Message | CallbackQuery, user: User):
     """Команда /buy - БАЛАНС + ПОКУПКА"""
@@ -51,6 +51,7 @@ async def buy_package(callback: CallbackQuery):
 @router.callback_query(F.data.startswith("pay_yoo:"))
 async def pay_yookassa_email(callback: CallbackQuery, state: FSMContext):
     """Оплата YooKassa - запрос email"""
+    logger.info(f"💳 YooKassa payment initiated: user={callback.from_user.id}")
     package_id = callback.data.split(":")[1]
     
     await state.update_data(package_id=package_id)
@@ -74,7 +75,7 @@ async def process_email(message: Message, session: AsyncSession, user: User, sta
     # Валидация email
     email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     if not re.match(email_pattern, email):
-        await message.answer("❌ Неверный формат email. Попробуйте еще раз или нажмите 'Чек не нужен'")
+        await message.answer("❌ Неверный формат email. Введите снова или нажмите кнопку «Чек не нужен».")
         return
     
     data = await state.get_data()
@@ -95,8 +96,7 @@ async def process_email(message: Message, session: AsyncSession, user: User, sta
         
         await message.answer(
             f"💳 <b>Оплата {total_gens} генераций</b>\n\n"
-            f"Сумма: {price}₽\n"
-            f"Чек будет отправлен на: {email}\n\n"
+            f"Сумма: {price}₽\n\n"
             f"Нажмите кнопку ниже для оплаты:",
             reply_markup=InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text="💳 Перейти к оплате", url=payment_data["payment_url"])]
@@ -104,9 +104,10 @@ async def process_email(message: Message, session: AsyncSession, user: User, sta
             parse_mode="HTML"
         )
         await state.clear()
+        logger.info(f"✅ YooKassa payment created: user={message.from_user.id}, amount={price}, email={email}")
         
     except Exception as e:
-        logger.error(f"Payment creation error: {e}", exc_info=True)
+        logger.error(f"❌ Payment creation error: user={message.from_user.id}, error={e}", exc_info=True)
         await message.answer("❌ Ошибка создания платежа. Попробуйте позже.")
         await state.clear()
 
@@ -114,6 +115,7 @@ async def process_email(message: Message, session: AsyncSession, user: User, sta
 @router.callback_query(F.data.startswith("no_receipt:"))
 async def no_receipt(callback: CallbackQuery, session: AsyncSession, user: User, state: FSMContext):
     """Чек не нужен - используем дефолтный email для ИП"""
+    logger.info(f"📧 No receipt requested: user={callback.from_user.id}")
     package_id = callback.data.split(":")[1]
     package = get_package_info(package_id)
     
@@ -126,7 +128,7 @@ async def no_receipt(callback: CallbackQuery, session: AsyncSession, user: User,
             user=user,
             amount=price,
             credits=total_gens,
-            email=None
+            email=None  # Используется DEFAULT_RECEIPT_EMAIL
         )
         
         await callback.message.edit_text(
@@ -140,38 +142,17 @@ async def no_receipt(callback: CallbackQuery, session: AsyncSession, user: User,
         )
         await state.clear()
         await callback.answer()
+        logger.info(f"✅ YooKassa payment created (no receipt): user={callback.from_user.id}, amount={price}")
         
     except Exception as e:
-        logger.error(f"Payment creation error: {e}", exc_info=True)
+        logger.error(f"❌ Payment creation error: user={callback.from_user.id}, error={e}", exc_info=True)
         await callback.answer("❌ Ошибка создания платежа", show_alert=True)
         await state.clear()
 
 
-@router.callback_query(F.data.startswith("pay_stars:"))
-async def pay_stars(callback: CallbackQuery, session: AsyncSession, user: User):
-    """Оплата через Stars"""
-    package_id = callback.data.split(":")[1]
-    package = get_package_info(package_id)
-    
-    total_gens = package["generations"] + package["bonus"]
-    price_rub = package["price"]
-    stars_amount = calculate_stars_amount(price_rub)
-    
-    await callback.message.answer_invoice(
-        title=f"{total_gens} генераций",
-        description=f"Пополнение баланса на {total_gens} генераций",
-        payload=f"stars_{package_id}_{user.id}",
-        currency="XTR",
-        prices=[{"label": f"{total_gens} генераций", "amount": stars_amount}]
-    )
-    
-    await callback.message.delete()
-    await callback.answer()
-
-
 @router.callback_query(F.data == "cancel")
 async def cancel_action(callback: CallbackQuery, state: FSMContext):
-    """Отмена"""
+    """Отмена действия"""
     await state.clear()
     await callback.message.delete()
     await callback.answer("❌ Отменено")

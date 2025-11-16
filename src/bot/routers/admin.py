@@ -4,10 +4,11 @@ from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from src.db.models import User, Broadcast, Task
+from src.db.models import User, Broadcast
 from src.bot.states import BroadcastStates
-from src.services.users import UserService
 from src.core.config import settings
+from src.db.engine import async_session_maker
+from src.services.telegram_safe import safe_send_text, safe_send_photo, safe_send_video  # ✅ ДОБАВЛЕНО
 import asyncio
 import logging
 
@@ -17,7 +18,7 @@ router = Router()
 
 @router.message(Command("broadcast"))
 async def cmd_broadcast(message: Message, state: FSMContext):
-    """Рассылка (КАК В NANOBANANA!)"""
+    """Рассылка (ТОЛЬКО ДЛЯ АДМИНОВ)"""
     if message.from_user.id not in settings.admin_list:
         return
     
@@ -31,98 +32,126 @@ async def cmd_broadcast(message: Message, state: FSMContext):
 
 
 @router.message(BroadcastStates.waiting_for_content)
-async def process_broadcast(message: Message, session: AsyncSession, state: FSMContext):
-    """Обработка рассылки (ТОЧНО КАК В NANOBANANA - БЕЗ ВОРКЕРА!)"""
+async def process_broadcast(message: Message, state: FSMContext):
+    """Обработка рассылки с telegram_safe защитой"""
     if message.from_user.id not in settings.admin_list:
         return
     
-    # Получаем всех пользователей
-    result = await session.execute(select(User))
-    users = result.scalars().all()
-    
-    # Определяем тип контента
-    text = message.text or message.caption or ""
-    photo_id = None
-    video_id = None
-    
-    if message.photo:
-        photo_id = message.photo[-1].file_id
-    elif message.video:
-        video_id = message.video.file_id
-    
-    # Создаем запись рассылки
-    broadcast = Broadcast(
-        message_text=text,
-        total_users=len(users),
-        created_by=message.from_user.id,
-        status="in_progress"
-    )
-    session.add(broadcast)
-    await session.commit()
-    
-    # Рассылка (СИНХРОННО как в nanoBanan!)
-    sent = 0
-    failed = 0
-    
-    for user in users:
-        try:
+    async with async_session_maker() as session:
+        # Получаем всех пользователей
+        result = await session.execute(select(User))
+        users = result.scalars().all()
+        
+        # Определяем тип контента
+        text = message.text or message.caption or ""
+        photo_id = None
+        video_id = None
+        
+        if message.photo:
+            photo_id = message.photo[-1].file_id
+        elif message.video:
+            video_id = message.video.file_id
+        
+        # Создаем запись рассылки
+        broadcast = Broadcast(
+            message_text=text,
+            total_users=len(users),
+            created_by=message.from_user.id,
+            status="in_progress"
+        )
+        session.add(broadcast)
+        await session.commit()
+        
+        # Рассылка с SAFE защитой
+        sent_count = 0
+        failed_count = 0
+        
+        status_message = await message.answer(
+            f"📊 Рассылка началась...\n"
+            f"Всего пользователей: {len(users)}"
+        )
+        
+        for i, user in enumerate(users):
+            success = False
+            
+            # ✅ ИСПОЛЬЗУЕМ SAFE ФУНКЦИИ
             if photo_id:
-                await message.bot.send_photo(
+                msg = await safe_send_photo(
+                    bot=message.bot,
                     chat_id=user.telegram_id,
                     photo=photo_id,
-                    caption=text
+                    caption=text,
+                    parse_mode="HTML"
                 )
+                success = msg is not None
             elif video_id:
-                await message.bot.send_video(
+                msg = await safe_send_video(
+                    bot=message.bot,
                     chat_id=user.telegram_id,
                     video=video_id,
-                    caption=text
+                    caption=text,
+                    parse_mode="HTML"
                 )
+                success = msg is not None
             else:
-                await message.bot.send_message(
+                msg = await safe_send_text(
+                    bot=message.bot,
                     chat_id=user.telegram_id,
-                    text=text
+                    text=text,
+                    parse_mode="HTML"
+                )
+                success = msg is not None
+            
+            if success:
+                sent_count += 1
+            else:
+                failed_count += 1
+            
+            # Обновляем статус каждые 10 пользователей
+            if (i + 1) % 10 == 0:
+                await status_message.edit_text(
+                    f"📊 Рассылка...\n"
+                    f"Отправлено: {sent_count}/{len(users)}\n"
+                    f"Ошибок: {failed_count}"
                 )
             
-            sent += 1
-            await asyncio.sleep(0.05)  # Rate limiting
-            
-        except Exception as e:
-            logger.error(f"Broadcast error for user {user.telegram_id}: {e}")
-            failed += 1
-    
-    # Обновляем запись
-    broadcast.sent_count = sent
-    broadcast.failed_count = failed
-    broadcast.status = "completed"
-    await session.commit()
-    
-    await message.answer(
-        f"✅ Рассылка завершена\n\n"
-        f"Отправлено: {sent}\n"
-        f"Ошибок: {failed}"
-    )
-    await state.clear()
+            # Задержка
+            await asyncio.sleep(0.05)
+        
+        # Обновляем запись в БД
+        broadcast.sent_count = sent_count
+        broadcast.failed_count = failed_count
+        broadcast.status = "completed"
+        await session.commit()
+        
+        await status_message.edit_text(
+            f"✅ <b>Рассылка завершена!</b>\n\n"
+            f"📊 Всего: {len(users)}\n"
+            f"✅ Отправлено: {sent_count}\n"
+            f"❌ Ошибок: {failed_count}",
+            parse_mode="HTML"
+        )
+        
+        await state.clear()
 
 
 @router.message(Command("stats"))
-async def cmd_stats(message: Message, session: AsyncSession):
+async def cmd_stats(message: Message):
     """Статистика"""
     if message.from_user.id not in settings.admin_list:
         return
     
-    total_users = await UserService.get_user_count(session)
-    
-    result = await session.execute(select(Task))
-    tasks = result.scalars().all()
-    
-    total_tasks = len(tasks)
-    completed = len([t for t in tasks if t.status.value == "completed"])
-    
-    await message.answer(
-        f"📊 <b>Статистика</b>\n\n"
-        f"👥 Пользователей: {total_users}\n"
-        f"📝 Задач: {total_tasks}\n"
-        f"✅ Выполнено: {completed}",
-        parse_mode="HTML"
-    )
+    async with async_session_maker() as session:
+        result = await session.execute(select(User))
+        users = result.scalars().all()
+        
+        active_users = [u for u in users if u.balance > 0]
+        total_balance = sum(u.balance for u in users)
+        
+        await message.answer(
+            f"📊 <b>Статистика бота</b>\n\n"
+            f"👥 Всего пользователей: {len(users)}\n"
+            f"⚡ Активных: {len(active_users)}\n"
+            f"💰 Общий баланс: {int(total_balance)} ген.",
+            parse_mode="HTML"
+        )

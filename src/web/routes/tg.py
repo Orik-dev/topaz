@@ -1,42 +1,38 @@
-from fastapi import APIRouter, Request, Header
+from fastapi import APIRouter, Request, HTTPException
 from aiogram import Bot, Dispatcher
 from aiogram.types import Update
 from src.core.config import settings
-from src.bot.routers import get_routers
-from src.bot.middlewares import DatabaseMiddleware, UserMiddleware, ClearStateOnCommandMiddleware
 import logging
 
+router = APIRouter()
 logger = logging.getLogger(__name__)
-router = APIRouter(prefix="/tg", tags=["telegram"])
-
-# Initialize bot and dispatcher
-bot = Bot(token=settings.BOT_TOKEN)
-dp = Dispatcher()
-
-# Register all routers
-dp.include_router(get_routers())
-
-# Register middlewares
-dp.message.middleware(ClearStateOnCommandMiddleware())
-dp.message.middleware(DatabaseMiddleware())
-dp.message.middleware(UserMiddleware())
-dp.callback_query.middleware(DatabaseMiddleware())
-dp.callback_query.middleware(UserMiddleware())
 
 
-@router.post("/webhook")
-async def telegram_webhook(
-    request: Request,
-    x_telegram_bot_api_secret_token: str = Header(None)
-):
-    """Telegram webhook endpoint"""
-    if x_telegram_bot_api_secret_token != settings.WEBHOOK_SECRET:
-        logger.warning("Invalid webhook secret token")
-        return {"status": "error", "message": "Invalid secret token"}
+@router.post("/tg/webhook")
+async def telegram_webhook(request: Request):
+    """
+    Telegram webhook endpoint
+    ✅ С проверкой секретного токена
+    """
+    # Проверяем секретный токен
+    secret_token = request.headers.get("X-Telegram-Bot-Api-Secret-Token")
+    if secret_token != settings.WEBHOOK_SECRET:
+        logger.warning(f"Invalid webhook secret token")
+        raise HTTPException(status_code=403, detail="Forbidden")
     
-    update_data = await request.json()
-    update = Update(**update_data)
-    
-    await dp.feed_update(bot, update)
-    
-    return {"status": "ok"}
+    try:
+        update_dict = await request.json()
+        
+        # Получаем bot и dispatcher из app state
+        bot: Bot = request.app.state.bot
+        dp: Dispatcher = request.app.state.dp
+        
+        # Обрабатываем update
+        update = Update(**update_dict)
+        await dp.feed_update(bot, update)
+        
+        return {"ok": True}
+        
+    except Exception as e:
+        logger.error(f"Telegram webhook error: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Internal server error")

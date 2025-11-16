@@ -16,8 +16,10 @@ router = Router()
 @router.message(F.text == "🎬 Улучшить видео")
 async def video_enhance_start(message: Message, state: FSMContext):
     """Начало улучшения видео"""
+    await state.clear()  # ✅ Очищаем состояние
     await message.answer(
-        "🎬 Отправьте видео для улучшения",
+        "🎬 Отправьте видео для улучшения\n\n"
+        "⚠️ Максимум 50 МБ, до 5 минут",
         reply_markup=cancel_keyboard()
     )
     await state.set_state(VideoStates.waiting_for_video)
@@ -27,6 +29,17 @@ async def video_enhance_start(message: Message, state: FSMContext):
 async def video_received(message: Message, state: FSMContext):
     """Видео получено - выбор модели"""
     video = message.video
+    
+    # Проверяем размер
+    if video.file_size > 50 * 1024 * 1024:  # 50 МБ
+        await message.answer("❌ Файл слишком большой. Максимум 50 МБ")
+        return
+    
+    # Проверяем длительность
+    if video.duration > 300:  # 5 минут
+        await message.answer("❌ Видео слишком длинное. Максимум 5 минут")
+        return
+    
     duration_minutes = max(1.0, video.duration / 60.0)
     
     await state.update_data(
@@ -44,6 +57,12 @@ async def video_received(message: Message, state: FSMContext):
         reply_markup=video_models_keyboard()
     )
     await state.set_state(VideoStates.selecting_model)
+
+
+@router.message(VideoStates.waiting_for_video)
+async def wrong_content_type(message: Message):
+    """Неправильный тип контента"""
+    await message.answer("❌ Пожалуйста, отправьте видео")
 
 
 @router.callback_query(VideoStates.selecting_model, F.data.startswith("vid_model:"))
@@ -68,38 +87,22 @@ async def process_video_model(
     
     if user.balance < cost:
         await callback.answer(
-            f"❌ Недостаточно генераций! Требуется: {cost}",
+            f"❌ Недостаточно генераций!\n\n"
+            f"Требуется: {cost} ген.\n"
+            f"У вас: {int(user.balance)} ген.\n\n"
+            f"Используйте /buy",
             show_alert=True
         )
         await state.clear()
         return
     
-    await callback.message.edit_text("⏳ Задача поставлена в очередь...")
+    await callback.message.edit_text(
+        f"⏳ Обработка началась...\n\n"
+        f"Это займет несколько минут.\n"
+        f"Мы пришлем результат когда всё будет готово."
+    )
     
-    # Параметры видео
-    video_params = {
-        "source": {
-            "resolution": {"width": data["width"], "height": data["height"]},
-            "container": "mp4",
-            "size": data["file_size"],
-            "duration": int(data["duration"] * 1000),
-            "frameRate": 30,
-            "frameCount": int(data["duration"] * 30)
-        },
-        "output": {
-            "resolution": {"width": data["width"] * 2, "height": data["height"] * 2},
-            "audioCodec": "AAC",
-            "audioTransfer": "Copy",
-            "frameRate": 30,
-            "dynamicCompressionLevel": "High",
-            "container": "mp4"
-        },
-        "filters": [{
-            "model": model_info["model"],
-            "videoType": "Progressive",
-            "auto": "Relative"
-        }]
-    }
+    file_id = data.get("file_id")
     
     # Создаем задачу
     task = await GenerationService.create_task(
@@ -108,8 +111,25 @@ async def process_video_model(
         task_type=TaskType.VIDEO_ENHANCE,
         model=model_key,
         cost=cost,
-        input_file_id=data["file_id"],
-        parameters=video_params
+        input_file_id=file_id,
+        parameters={
+            "source": {
+                "width": data.get("width", 1280),
+                "height": data.get("height", 720),
+                "duration": data.get("duration", 60),
+                "frameRate": 30,
+                "container": "mp4"
+            },
+            "output": {
+                "width": data.get("width", 1280) * 2,
+                "height": data.get("height", 720) * 2,
+                "frameRate": model_info.get("output_fps", 30),
+                "container": "mp4",
+                "audioCodec": "AAC",
+                "audioTransfer": "Copy"
+            },
+            "filters": model_info["filters"]
+        }
     )
     await session.commit()
     
@@ -117,8 +137,10 @@ async def process_video_model(
     await GenerationService.enqueue_video_task(
         task_id=task.id,
         user_telegram_id=user.telegram_id,
-        video_file_id=data["file_id"]
+        video_file_id=file_id
     )
     
     await state.clear()
     await callback.answer()
+    
+    logger.info(f"Video task created: task_id={task.id}, user={user.telegram_id}, model={model_key}, cost={cost}")

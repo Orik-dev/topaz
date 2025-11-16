@@ -1,28 +1,27 @@
 import logging
 import sys
-from pathlib import Path
+import os
 
-# Создаем директорию для логов
-Path("logs").mkdir(exist_ok=True)
 
-# Формат логов
-LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
+def setup_logging():
+    """Настройка логирования"""
+    # Создаем директорию для логов если нет
+    os.makedirs('logs', exist_ok=True)
+    
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.StreamHandler(sys.stdout),
+            logging.FileHandler('logs/bot.log', encoding='utf-8')
+        ]
+    )
+    
+    # Отключаем verbose логи от библиотек
+    logging.getLogger("aiogram").setLevel(logging.WARNING)
+    logging.getLogger("aiohttp").setLevel(logging.WARNING)
+    logging.getLogger("asyncio").setLevel(logging.WARNING)
 
-# Настройка логирования
-logging.basicConfig(
-    level=logging.INFO,
-    format=LOG_FORMAT,
-    datefmt=DATE_FORMAT,
-    handlers=[
-        logging.FileHandler("logs/bot.log", encoding="utf-8"),
-        logging.StreamHandler(sys.stdout)
-    ]
-)
 
-# Отключаем лишние логи
-logging.getLogger("aiogram").setLevel(logging.WARNING)
-logging.getLogger("aiohttp").setLevel(logging.WARNING)
-logging.getLogger("yookassa").setLevel(logging.WARNING)
-
+# Создаем глобальный logger
 logger = logging.getLogger(__name__)

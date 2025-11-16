@@ -1,27 +1,22 @@
-from sqlalchemy import Column, Integer, String, BigInteger, Float, DateTime, Text, Enum, Index
+from sqlalchemy import Column, Integer, String, Float, BigInteger, DateTime, Text, Enum as SQLEnum, ForeignKey, Index
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
-import enum
+from datetime import datetime
+from enum import Enum
 
 Base = declarative_base()
 
 
-class PaymentStatus(str, enum.Enum):
-    PENDING = "pending"
-    SUCCEEDED = "succeeded"
-    CANCELED = "canceled"
+class TaskType(str, Enum):
+    IMAGE_ENHANCE = "image_enhance"
+    VIDEO_ENHANCE = "video_enhance"
 
 
-class TaskStatus(str, enum.Enum):
+class TaskStatus(str, Enum):
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
-
-
-class TaskType(str, enum.Enum):
-    IMAGE_ENHANCE = "image_enhance"
-    VIDEO_ENHANCE = "video_enhance"
 
 
 class User(Base):
@@ -37,46 +32,46 @@ class User(Base):
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)
 
 
+class CreditLedger(Base):
+    """История операций с генерациями"""
+    __tablename__ = "credit_ledger"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    amount = Column(Float, nullable=False)  # Положительное = начисление, отрицательное = списание
+    balance_after = Column(Float, nullable=False)
+    description = Column(String(500), nullable=False)
+    reference_type = Column(String(50), nullable=True)  # payment, task, refund, bonus, etc.
+    reference_id = Column(Integer, nullable=True)  # ID связанной записи
+    created_at = Column(DateTime, default=func.now(), nullable=False, index=True)
+
+
 class Payment(Base):
     __tablename__ = "payments"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, nullable=False, index=True)
-    payment_id = Column(String(255), unique=True, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    payment_id = Column(String(255), unique=True, nullable=False, index=True)
     amount = Column(Float, nullable=False)
     credits = Column(Float, nullable=False)
-    status = Column(Enum(PaymentStatus), default=PaymentStatus.PENDING, nullable=False)
-    payment_method = Column(String(50), nullable=False)
-    metadata = Column(Text, nullable=True)
+    status = Column(String(50), default="pending", nullable=False)
+    payment_method = Column(String(50), nullable=True)  # yookassa, stars
     created_at = Column(DateTime, default=func.now(), nullable=False)
-    updated_at = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)
-
-
-class CreditLedger(Base):
-    __tablename__ = "credit_ledger"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, nullable=False, index=True)
-    amount = Column(Float, nullable=False)
-    balance_after = Column(Float, nullable=False)
-    description = Column(String(255), nullable=False)
-    reference_type = Column(String(50), nullable=True)
-    reference_id = Column(Integer, nullable=True)
-    created_at = Column(DateTime, default=func.now(), nullable=False)
+    completed_at = Column(DateTime, nullable=True)
 
 
 class Task(Base):
     __tablename__ = "tasks"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, nullable=False, index=True)
-    task_type = Column(Enum(TaskType), nullable=False)
-    status = Column(Enum(TaskStatus), default=TaskStatus.PENDING, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    task_type = Column(SQLEnum(TaskType), nullable=False)
+    status = Column(SQLEnum(TaskStatus), default=TaskStatus.PENDING, nullable=False, index=True)
     cost = Column(Float, nullable=False)
     model = Column(String(100), nullable=False)
     input_file_id = Column(String(255), nullable=True)
     output_file_url = Column(Text, nullable=True)
-    topaz_request_id = Column(String(255), nullable=True)
+    topaz_request_id = Column(String(255), nullable=True, index=True)
     parameters = Column(Text, nullable=True)
     error_message = Column(Text, nullable=True)
     created_at = Column(DateTime, default=func.now(), nullable=False)

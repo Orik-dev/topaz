@@ -1,24 +1,20 @@
 import multiprocessing
+from src.core.config import settings
 
 # Server socket
-bind = "0.0.0.0:8000"
+bind = f"{settings.SERVER_HOST}:{settings.SERVER_PORT}"
 backlog = 2048
 
-# Worker processes
-workers = multiprocessing.cpu_count() * 2 + 1
+# Worker processes (ИСПРАВЛЕНО - МЕНЬШЕ WORKERS!)
+workers = 2  # ✅ Было: multiprocessing.cpu_count() * 2 + 1
 worker_class = "uvicorn.workers.UvicornWorker"
 worker_connections = 1000
-max_requests = 10000
-max_requests_jitter = 1000
-
-# Timeouts
 timeout = 120
 keepalive = 5
-graceful_timeout = 30
 
 # Logging
-accesslog = "-"
-errorlog = "-"
+accesslog = "/app/logs/access.log"
+errorlog = "/app/logs/error.log"
 loglevel = "info"
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
@@ -33,6 +29,6 @@ user = None
 group = None
 tmp_upload_dir = None
 
-# SSL (if needed)
-# keyfile = None
-# certfile = None
+# SSL
+keyfile = None
+certfile = None

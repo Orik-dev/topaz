@@ -1,29 +1,24 @@
 FROM python:3.11-slim
 
+# Рабочая директория
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy requirements
+# Копируем requirements
 COPY requirements.txt .
 
-# Install Python dependencies
+# Устанавливаем Python зависимости (БЕЗ системных пакетов MySQL!)
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application
+# Копируем код
 COPY . .
 
-# Create logs directory
+# Создаем директорию для логов
 RUN mkdir -p /app/logs
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/healthz || exit 1
+# Права на выполнение скрипта запуска
+RUN chmod +x /app/start.sh 2>/dev/null || true
 
-# Default command (can be overridden)
+EXPOSE 8000
+
+# Запуск через Gunicorn
 CMD ["gunicorn", "src.web.server:app", "-c", "gunicorn.conf.py"]

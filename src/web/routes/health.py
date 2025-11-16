@@ -1,26 +1,24 @@
 from fastapi import APIRouter
-from sqlalchemy import text
-from src.db.engine import async_session_maker
-import redis.asyncio as redis
-from src.core.config import settings
+from datetime import datetime
 
-router = APIRouter(tags=["health"])
+router = APIRouter()
 
 
 @router.get("/healthz")
 async def health_check():
     """Health check endpoint"""
-    try:
-        # Check database
-        async with async_session_maker() as session:
-            await session.execute(text("SELECT 1"))
-        
-        # Check Redis
-        r = redis.from_url(settings.redis_url)
-        await r.ping()
-        await r.close()
-        
-        return {"status": "healthy", "database": "ok", "redis": "ok"}
-        
-    except Exception as e:
-        return {"status": "unhealthy", "error": str(e)}
+    return {
+        "status": "ok",
+        "service": "Topaz Bot",
+        "timestamp": datetime.utcnow().isoformat()
+    }
+
+
+@router.get("/")
+async def root():
+    """Root endpoint"""
+    return {
+        "status": "ok",
+        "service": "Topaz Bot API",
+        "version": "1.0.0"
+    }

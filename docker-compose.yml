@@ -1,16 +1,15 @@
-version: '3.8'
-
 services:
   redis:
     image: redis:7-alpine
     container_name: topaz_redis
     restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
     ports:
       - "6379:6379"
     networks:
       - topaz_network
-    volumes:
-      - redis_data:/data
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
@@ -23,85 +22,57 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./logs:/app/logs
     depends_on:
       redis:
         condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+      - ./src:/app/src
+    ports:
+      - "8000:8000"
     networks:
       - topaz_network
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 2G
-        reservations:
-          cpus: '0.5'
-          memory: 512M
-    command: gunicorn src.web.server:app -c gunicorn.conf.py
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/healthz" ]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
 
   image_worker:
     build: .
     container_name: topaz_image_worker
     restart: unless-stopped
+    command: [ "arq", "src.workers.image_worker.WorkerSettings" ]
     env_file:
       - .env
-    volumes:
-      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
     depends_on:
       redis:
         condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+      - ./src:/app/src
     networks:
       - topaz_network
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-    deploy:
-      resources:
-        limits:
-          cpus: '1.0'
-          memory: 1G
-        reservations:
-          cpus: '0.25'
-          memory: 256M
-    command: arq src.workers.image_worker.WorkerSettings
 
   video_worker:
     build: .
     container_name: topaz_video_worker
     restart: unless-stopped
+    command: [ "arq", "src.workers.video_worker.WorkerSettings" ]
     env_file:
       - .env
-    volumes:
-      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
     depends_on:
       redis:
         condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+      - ./src:/app/src
     networks:
       - topaz_network
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-    deploy:
-      resources:
-        limits:
-          cpus: '1.0'
-          memory: 1G
-        reservations:
-          cpus: '0.25'
-          memory: 256M
-    command: arq src.workers.video_worker.WorkerSettings
 
 networks:
   topaz_network:
