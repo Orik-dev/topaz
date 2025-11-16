@@ -1,13 +1,45 @@
-from fastapi import APIRouter, Request, Header, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, Request, Header
+from aiogram import Bot, Dispatcher
 from aiogram.types import Update
+from src.core.config import settings
+from src.bot.routers import commands, stars
+from src.bot.middlewares import DatabaseMiddleware, UserMiddleware, ClearStateOnCommandMiddleware
+import logging
 
-router = APIRouter()
+logger = logging.getLogger(__name__)
+router = APIRouter(prefix="/tg", tags=["telegram"])
 
-@router.post("/tg/webhook")
-async def tg_webhook(request: Request, x_telegram_bot_api_secret_token: str = Header(None)):
-    if x_telegram_bot_api_secret_token != request.app.state.webhook_secret:
-        raise HTTPException(403, "forbidden")
-    update = Update.model_validate(await request.json(), context={"bot": request.app.state.bot})
-    await request.app.state.dp.feed_update(request.app.state.bot, update)
-    return JSONResponse({"ok": True})
+# Initialize bot and dispatcher
+bot = Bot(token=settings.BOT_TOKEN)
+dp = Dispatcher()
+
+# Register routers
+dp.include_router(commands.router)
+dp.include_router(stars.router)
+
+# Register middlewares
+dp.message.middleware(ClearStateOnCommandMiddleware())
+dp.message.middleware(DatabaseMiddleware())
+dp.message.middleware(UserMiddleware())
+dp.callback_query.middleware(DatabaseMiddleware())
+dp.callback_query.middleware(UserMiddleware())
+
+
+@router.post("/webhook")
+async def telegram_webhook(
+    request: Request,
+    x_telegram_bot_api_secret_token: str = Header(None)
+):
+    """Telegram webhook endpoint"""
+    # Verify secret token
+    if x_telegram_bot_api_secret_token != settings.WEBHOOK_SECRET:
+        logger.warning("Invalid webhook secret token")
+        return {"status": "error", "message": "Invalid secret token"}
+    
+    # Process update
+    update_data = await request.json()
+    update = Update(**update_data)
+    
+    await dp.feed_update(bot, update)
+    
+    return {"status": "ok"}

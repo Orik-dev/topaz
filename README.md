@@ -1,61 +1,118 @@
-📘 README.md (архитектура и запуск)
-Что это
+# Topaz AI Bot
 
-Нано Банана — телеграм-бот для генерации текста/картинок через RunBlob/Gemini. Баланс в кредитах, пополнение через YooKassa и Telegram Stars. UX: минимум спама, всё через понятные кнопки.
+Telegram бот для улучшения фото и видео с помощью Topaz Labs API.
 
-Архитектура
+## Возможности
 
-src/core — конфиг/логирование.
+- 📸 Улучшение фото (AI upscale, denoise, sharpen)
+- 🎬 Улучшение видео (AI upscale, frame interpolation)
+- 💳 Оплата через YooKassa и Telegram Stars
+- ⚡ Автоматический возврат генераций при ошибках
+- 📊 Админ-панель с рассылками и статистикой
 
-src/db — движок и ORM-модели.
+## Технологии
 
-src/vendors — внешние клиенты (RunBlob).
+- **Backend**: Python 3.11, FastAPI, aiogram 3.14
+- **Workers**: ARQ (асинхронные очереди)
+- **Database**: MySQL 5.7
+- **Cache**: Redis 7
+- **API**: Topaz Labs Image/Video API
+- **Payments**: YooKassa, Telegram Stars
 
-src/services — бизнес-логика: тарифы, генерация, платежи, пользователи.
+## Архитектура
+```
+┌─────────────┐
+│   Nginx     │ (Reverse Proxy)
+└──────┬──────┘
+       │
+┌──────▼──────────────────┐
+│  FastAPI (Gunicorn)     │ (Webhooks)
+└──────┬──────────────────┘
+       │
+       ├─────────┬──────────┬─────────┐
+       │         │          │         │
+┌──────▼───┐ ┌──▼────┐ ┌───▼────┐ ┌──▼──────┐
+│  MySQL   │ │ Redis │ │ Image  │ │  Video  │
+│          │ │       │ │ Worker │ │ Worker  │
+└──────────┘ └───────┘ └────────┘ └─────────┘
+```
 
-src/bot — клавиатуры, middleware, FSM, routers (команды/звёзды).
+## Установка
 
-src/web — FastAPI: webhook Telegram, webhook YooKassa, health, return page.
+### 1. Клонировать репозиторий
+```bash
+git clone <repo_url>
+cd topaz-bot
+```
 
-db/create.sql — миграция MySQL 5.7.
+### 2. Настроить .env
+```bash
+cp .env.example .env
+nano .env
+```
 
-Dockerfile / compose / nginx / gunicorn — продакшен-сборка.
+Заполнить все переменные окружения.
 
-nanobanana/
-├─ src/
-│  ├─ core/
-│  │  ├─ config.py               # настройки/ENV
-│  │  └─ logging.py              # JSON-логгер
-│  ├─ db/
-│  │  ├─ engine.py               # async engine + session
-│  │  └─ models.py               # SQLAlchemy ORM (users, payments, credit_ledger, tasks)
-│  ├─ vendors/
-│  │  └─ runblob.py              # клиент RunBlob/Gemini
-│  ├─ services/
-│  │  ├─ pricing.py              # тарифы/пакеты/конверсия
-│  │  ├─ users.py                # учётка/баланс
-│  │  ├─ generation.py           # генерация, списание
-│  │  └─ payments.py             # YooKassa create + webhook
-│  ├─ bot/
-│  │  ├─ keyboards.py            # инлайн-клавиатуры
-│  │  ├─ middlewares.py          # логирование, rate-limit
-│  │  ├─ states.py               # FSM состояния
-│  │  └─ routers/
-│  │     ├─ commands.py          # /start /help /balance /gen /history /topup
-│  │     └─ stars.py             # /topup_stars (Telegram Stars)
-│  └─ web/
-│     ├─ server.py               # FastAPI приложение, webhook setup
-│     └─ routes/
-│        ├─ tg.py                # /tg/webhook
-│        ├─ yookassa.py          # /yookassa/callback
-│        ├─ health.py            # /healthz
-│        └─ misc.py              # /pay/return
-├─ db/
-│  └─ create.sql                 # миграция БД (MySQL 5.7)
-├─ deploy/
-│  └─ nginx.conf                 # nginx (проксирование)
-├─ Dockerfile
-├─ docker-compose.yml
-├─ gunicorn.conf.py
-├─ requirements.txt
-└─ README.md
+### 3. Создать базу данных
+```bash
+mysql -h servers.local -u u2969681_devlz -p < db/create.sql
+```
+
+### 4. Запустить через Docker
+```bash
+docker-compose up -d --build
+```
+
+### 5. Проверить логи
+```bash
+docker-compose logs -f bot
+docker-compose logs -f image_worker
+docker-compose logs -f video_worker
+```
+
+## Локальная разработка
+```bash
+# Создать виртуальное окружение
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
+
+# Установить зависимости
+pip install -r requirements.txt
+
+# Запустить Redis
+docker run -d -p 6379:6379 redis:7-alpine
+
+# Запустить бота
+python -m uvicorn src.web.server:app --reload --host 0.0.0.0 --port 8000
+
+# В отдельных терминалах запустить workers
+arq src.workers.image_worker.WorkerSettings
+arq src.workers.video_worker.WorkerSettings
+```
+
+## Команды бота
+
+- `/start` - Начать работу
+- `/help` - Справка
+- `/bots` - Наши боты
+- `/balance` - Баланс генераций
+- `/topup` - Пополнить
+
+**Админ команды:**
+- `/broadcast` - Рассылка
+- `/stats` - Статистика
+
+## Мониторинг
+
+- Health check: `http://yourdomain.com/healthz`
+- Logs: `./logs/bot.log`
+- Docker logs: `docker-compose logs -f`
+
+## Поддержка
+
+Telegram: @guardGpt
+
+## Лицензия
+
+Proprietary

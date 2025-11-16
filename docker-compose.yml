@@ -1,183 +1,111 @@
-# version: "3.9"
-
-# services:
-#   app:
-#     build: .
-#     env_file: .env
-#     ports:
-#       - "127.0.0.1:8000:8000"
-#     depends_on:
-#       - redis
-#     restart: unless-stopped
-#     dns:
-#       - 8.8.8.8
-#       - 1.1.1.1
-#     healthcheck:
-#       test: [ "CMD", "curl", "-fsS", "http://localhost:8000/healthz" ]
-#       interval: 15s
-#       timeout: 3s
-#       retries: 5
-
-#   worker:
-#     build: .
-#     command: [ "arq", "services.queue.WorkerSettings" ]
-#     env_file: .env
-#     depends_on:
-#       - redis
-#     restart: unless-stopped
-#     dns:
-#       - 8.8.8.8
-#       - 1.1.1.1
-
-#   cleanup:
-#     build: .
-#     command: >
-#       sh -c " while true; do
-#         python cleanup_redis.py;
-#         sleep 1800;
-#       done "
-#     env_file: .env
-#     depends_on:
-#       - redis
-#     restart: unless-stopped
-#     dns:
-#       - 8.8.8.8
-#       - 1.1.1.1
-
-#   redis:
-#     image: redis:7-alpine
-#     command: [ "redis-server", "--maxmemory-policy", "allkeys-lru", "--save", "", "--appendonly", "no", "--stop-writes-on-bgsave-error", "no" ]
-#     restart: unless-stopped
-
-# version: "3.9"
-
-# services:
-#   app:
-#     build: .
-#     env_file: .env
-#     ports:
-#       - "127.0.0.1:8000:8000"
-#     depends_on:
-#       - redis
-#     restart: unless-stopped
-#     dns:
-#       - 8.8.8.8
-#       - 1.1.1.1
-#     volumes:
-#       - shared-temp:/app/temp_inputs # ✅ ДОБАВЛЕНО
-#     healthcheck:
-#       test: [ "CMD", "curl", "-fsS", "http://localhost:8000/healthz" ]
-#       interval: 15s
-#       timeout: 3s
-#       retries: 5
-
-#   worker:
-#     build: .
-#     command: [ "arq", "services.queue.WorkerSettings" ]
-#     env_file: .env
-#     depends_on:
-#       - redis
-#     restart: unless-stopped
-#     dns:
-#       - 8.8.8.8
-#       - 1.1.1.1
-#     volumes:
-#       - shared-temp:/app/temp_inputs # ✅ ДОБАВЛЕНО
-
-#   cleanup:
-#     build: .
-#     command: >
-#       sh -c " while true; do
-#         python cleanup_redis.py;
-#         sleep 600;
-#       done "
-#     env_file: .env
-#     depends_on:
-#       - redis
-#     restart: unless-stopped
-#     dns:
-#       - 8.8.8.8
-#       - 1.1.1.1
-#     volumes:
-#       - shared-temp:/app/temp_inputs # ✅ ДОБАВЛЕНО
-
-#   redis:
-#     image: redis:7-alpine
-#     command: [ "redis-server", "--maxmemory-policy", "allkeys-lru", "--save", "", "--appendonly", "no", "--stop-writes-on-bgsave-error", "no" ]
-#     restart: unless-stopped
-
-# volumes:
-#   shared-temp: # ✅ ДОБАВЛЕНО
-
-version: "3.9"
-
-# ✅ Общий блок для ротации логов
-x-logging: &default-logging
-  driver: "json-file"
-  options:
-    max-size: "50m"
-    max-file: "5"
+version: '3.8'
 
 services:
-  app:
-    build: .
-    env_file: .env
-    ports:
-      - "127.0.0.1:8000:8000"
-    depends_on:
-      - redis
-    restart: unless-stopped
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-    volumes:
-      - shared-temp:/app/temp_inputs
-      - backups:/app/backups
-    logging: *default-logging # ✅ ДОБАВЛЕНО
-    healthcheck:
-      test: [ "CMD", "curl", "-fsS", "http://localhost:8000/healthz" ]
-      interval: 15s
-      timeout: 3s
-      retries: 5
-
-  worker:
-    build: .
-    command: [ "arq", "services.queue.WorkerSettings" ]
-    env_file: .env
-    depends_on:
-      - redis
-    restart: unless-stopped
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-    volumes:
-      - shared-temp:/app/temp_inputs
-    logging: *default-logging # ✅ ДОБАВЛЕНО
-
-  cleanup:
-    build: .
-    command: >
-      sh -c " while true; do
-        python cleanup_redis.py;
-        sleep 600;
-      done "
-    env_file: .env
-    depends_on:
-      - redis
-    restart: unless-stopped
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-    volumes:
-      - shared-temp:/app/temp_inputs
-    logging: *default-logging # ✅ ДОБАВЛЕНО
-
   redis:
     image: redis:7-alpine
-    command: [ "redis-server", "--maxmemory-policy", "allkeys-lru", "--save", "", "--appendonly", "no", "--stop-writes-on-bgsave-error", "no" ]
+    container_name: topaz_redis
     restart: unless-stopped
-    logging: *default-logging # ✅ ДОБАВЛЕНО
+    ports:
+      - "6379:6379"
+    networks:
+      - topaz_network
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  bot:
+    build: .
+    container_name: topaz_bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - topaz_network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    command: gunicorn src.web.server:app -c gunicorn.conf.py
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/healthz" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  image_worker:
+    build: .
+    container_name: topaz_image_worker
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - topaz_network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    command: arq src.workers.image_worker.WorkerSettings
+
+  video_worker:
+    build: .
+    container_name: topaz_video_worker
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - topaz_network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    command: arq src.workers.video_worker.WorkerSettings
+
+networks:
+  topaz_network:
+    driver: bridge
 
 volumes:
-  shared-temp:
-  backups:
+  redis_data:

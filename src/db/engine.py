@@ -1,17 +1,30 @@
-"""Database engine configuration."""
-from __future__ import annotations
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
-from core.config import settings
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from src.core.config import settings
+from src.core.logging import logger
 
 engine = create_async_engine(
-    settings.DB_DSN,
+    settings.database_url,
+    echo=False,
+    pool_size=10,
+    max_overflow=20,
     pool_pre_ping=True,
-    pool_recycle=180,
-    pool_size=30,
-    pool_timeout=10,
-    pool_use_lifo=True,
-    max_overflow=70,
-    connect_args={"connect_timeout": 5},
+    pool_recycle=3600,
 )
 
-SessionLocal = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
+async_session_maker = async_sessionmaker(
+    engine,
+    class_=AsyncSession,
+    expire_on_commit=False
+)
+
+
+async def get_session() -> AsyncSession:
+    async with async_session_maker() as session:
+        try:
+            yield session
+        except Exception as e:
+            logger.error(f"Database session error: {e}")
+            await session.rollback()
+            raise
+        finally:
+            await session.close()
