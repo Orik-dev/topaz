@@ -1,24 +1,26 @@
 FROM python:3.11-slim
 
-# Рабочая директория
 WORKDIR /app
+
+# Установка системных зависимостей
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
 # Копируем requirements
 COPY requirements.txt .
 
-# Устанавливаем Python зависимости (БЕЗ системных пакетов MySQL!)
+# Устанавливаем Python зависимости
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Копируем код
+# Копируем весь проект
 COPY . .
 
 # Создаем директорию для логов
 RUN mkdir -p /app/logs
 
-# Права на выполнение скрипта запуска
+# Делаем скрипты исполняемыми
 RUN chmod +x /app/start.sh 2>/dev/null || true
 
-EXPOSE 8000
-
-# Запуск через Gunicorn
-CMD ["gunicorn", "src.web.server:app", "-c", "gunicorn.conf.py"]
+# По умолчанию запускаем бота
+CMD ["python", "-m", "src.web.server"]

@@ -7,7 +7,7 @@ from src.services.users import UserService
 from src.core.config import settings
 from src.workers.settings import get_redis_settings
 from src.services.pricing import IMAGE_MODELS
-from src.services.telegram_safe import safe_send_photo, safe_send_text  # ✅ ДОБАВЛЕНО
+from src.services.telegram_safe import safe_send_photo, safe_send_text
 from aiogram import Bot
 from aiogram.types import BufferedInputFile
 import logging
@@ -120,7 +120,6 @@ async def process_image_task(ctx: dict, task_id: int, user_telegram_id: int, ima
                 await session.flush()
                 await session.commit()
                 
-                # ✅ ИСПОЛЬЗУЕМ SAFE
                 await safe_send_text(
                     bot=bot,
                     chat_id=user.telegram_id,
@@ -128,7 +127,7 @@ async def process_image_task(ctx: dict, task_id: int, user_telegram_id: int, ima
                 )
                 return
 
-            # ✅ Отправляем результат ЧЕРЕЗ SAFE
+            # Отправляем результат ЧЕРЕЗ SAFE
             input_file = BufferedInputFile(result_data, filename="enhanced.jpg")
             await safe_send_photo(
                 bot=bot,
@@ -165,7 +164,6 @@ async def process_image_task(ctx: dict, task_id: int, user_telegram_id: int, ima
             )
             await session.commit()
 
-            # ✅ ИСПОЛЬЗУЕМ SAFE
             await safe_send_text(
                 bot=bot,
                 chat_id=user.telegram_id,
@@ -194,7 +192,6 @@ async def process_image_task(ctx: dict, task_id: int, user_telegram_id: int, ima
             )
             await session.commit()
 
-            # ✅ ИСПОЛЬЗУЕМ SAFE
             await safe_send_text(
                 bot=bot,
                 chat_id=user.telegram_id,
@@ -240,10 +237,23 @@ async def _poll_and_download_image(process_id: str) -> bytes:
     raise TopazAPIError("Превышено время обработки (30 минут)")
 
 
+# ✅ КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ - добавляем startup/shutdown
+async def startup(ctx):
+    """Инициализация worker при запуске"""
+    logger.info("Image worker started")
+
+
+async def shutdown(ctx):
+    """Очистка при остановке"""
+    logger.info("Image worker stopped")
+
+
 class WorkerSettings:
-    """ARQ worker configuration"""
+    """ARQ worker configuration с правильной инициализацией"""
     functions = [process_image_task]
     redis_settings = get_redis_settings()
     max_jobs = 10
     job_timeout = 3600
     keep_result = 3600
+    on_startup = startup      # ✅ ДОБАВЛЕНО
+    on_shutdown = shutdown    # ✅ ДОБАВЛЕНО
