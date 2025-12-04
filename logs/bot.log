@@ -400,3 +400,544 @@ aiogram.exceptions.TelegramNetworkError: HTTP Client says - ClientConnectorError
 2025-12-03 18:19:09,833 - src.web.server - INFO - Webhook уже установлен: https://5cfd79a6a0b7.ngrok-free.app/tg/webhook
 2025-12-03 18:19:27,223 - src.web.server - INFO - Stopping bot...
 2025-12-03 18:19:28,256 - src.web.server - INFO - Bot stopped
+2025-12-04 06:29:41,671 - src.web.server - INFO - Starting bot...
+2025-12-04 06:29:41,674 - src.web.server - INFO - Starting bot...
+2025-12-04 06:29:41,775 - src.web.server - INFO - Starting bot...
+2025-12-04 06:29:41,805 - src.web.server - INFO - Starting bot...
+2025-12-04 06:29:43,483 - src.web.server - INFO - Webhook set: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 06:29:43,510 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 06:29:43,777 - src.web.server - ERROR - Не удалось получить webhook_info: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 992, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 2088, in create_connection
+  File "uvloop/loop.pyx", line 2083, in uvloop.loop.Loop.create_connection
+  File "uvloop/sslproto.pyx", line 517, in uvloop.loop.SSLProtocol._on_handshake_complete
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 181, in make_request
+    async with session.post(
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/client.py", line 1187, in __aenter__
+    self._resp = await self._coro
+                 ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/client.py", line 574, in _request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 544, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 911, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1235, in _create_direct_connection
+    raise last_exc
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1204, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1000, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/src/web/server.py", line 81, in lifespan
+    info = await bot.get_webhook_info()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/bot.py", line 2001, in get_webhook_info
+    return await self(call, request_timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/bot.py", line 487, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/base.py", line 254, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 188, in make_request
+    raise TelegramNetworkError(method=method, message=f"{type(e).__name__}: {e}")
+aiogram.exceptions.TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+2025-12-04 06:29:43,991 - src.web.server - INFO - Webhook уже установлен: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 06:38:25,433 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:38:25,434 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:38:25,447 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:38:25,479 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:38:27,134 - src.web.server - INFO - Bot stopped
+2025-12-04 06:38:27,332 - src.web.server - INFO - Bot stopped
+2025-12-04 06:38:27,332 - src.web.server - INFO - Bot stopped
+2025-12-04 06:38:27,468 - src.web.server - INFO - Bot stopped
+2025-12-04 06:39:35,660 - src.web.server - INFO - Starting bot...
+2025-12-04 06:39:35,660 - src.web.server - INFO - Starting bot...
+2025-12-04 06:39:35,706 - src.web.server - INFO - Starting bot...
+2025-12-04 06:39:35,706 - src.web.server - INFO - Starting bot...
+2025-12-04 06:39:37,785 - src.web.server - INFO - Webhook set: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 06:39:37,785 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 06:39:37,787 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 06:39:37,845 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 06:40:01,863 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/start
+2025-12-04 06:40:14,434 - src.bot.middlewares - INFO - Request processed in 12.571s
+2025-12-04 06:40:20,875 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 06:40:22,029 - src.bot.middlewares - INFO - Request processed in 1.153s
+2025-12-04 06:41:43,471 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 06:41:43,945 - src.services.rate_limiter - ERROR - Rate limiter error: 'Redis' object has no attribute 'aclose'
+2025-12-04 06:41:45,959 - src.bot.middlewares - INFO - Request processed in 2.488s
+2025-12-04 06:41:54,134 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-12-04 06:42:04,001 - src.services.generation - INFO - Video task enqueued: task_id=8
+2025-12-04 06:42:04,237 - src.bot.routers.video - INFO - Video task created: task_id=8, user=436680563, model=proteus_4x, cost=5
+2025-12-04 06:42:04,239 - src.bot.middlewares - INFO - Request processed in 10.105s
+2025-12-04 06:44:35,938 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=cancel_task:8
+2025-12-04 06:44:36,483 - src.bot.routers.video - ERROR - Cancel callback error: 'Redis' object has no attribute 'aclose'
+2025-12-04 06:44:37,821 - src.bot.middlewares - INFO - Request processed in 1.883s
+2025-12-04 06:44:44,291 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=cancel
+2025-12-04 06:44:53,246 - src.bot.middlewares - INFO - Request processed in 8.956s
+2025-12-04 06:48:32,447 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:48:32,450 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:48:32,501 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:48:32,531 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:48:33,733 - src.web.server - INFO - Bot stopped
+2025-12-04 06:48:33,765 - src.web.server - INFO - Bot stopped
+2025-12-04 06:48:33,988 - src.web.server - INFO - Bot stopped
+2025-12-04 06:48:34,287 - src.web.server - INFO - Bot stopped
+2025-12-04 06:50:01,953 - src.web.server - INFO - Starting bot...
+2025-12-04 06:50:01,953 - src.web.server - INFO - Starting bot...
+2025-12-04 06:50:01,954 - src.web.server - INFO - Starting bot...
+2025-12-04 06:50:02,042 - src.web.server - INFO - Starting bot...
+2025-12-04 06:50:03,552 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 06:50:03,552 - src.web.server - INFO - Webhook set: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 06:50:03,553 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 06:50:03,553 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 06:53:32,279 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/start
+2025-12-04 06:53:50,904 - src.bot.middlewares - INFO - Request processed in 18.625s
+2025-12-04 06:53:51,120 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 06:53:52,795 - src.bot.middlewares - INFO - Request processed in 1.675s
+2025-12-04 06:54:02,300 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 06:54:10,291 - src.bot.middlewares - INFO - Request processed in 7.991s
+2025-12-04 06:54:15,845 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-12-04 06:54:17,685 - src.services.generation - INFO - Video task enqueued: task_id=9
+2025-12-04 06:54:17,905 - src.bot.routers.video - INFO - Video task created: task_id=9, user=436680563, model=proteus_4x, cost=5
+2025-12-04 06:54:17,906 - src.bot.middlewares - INFO - Request processed in 2.062s
+2025-12-04 06:55:53,723 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/broadcast
+2025-12-04 06:56:06,571 - src.bot.middlewares - INFO - Request processed in 12.848s
+2025-12-04 06:58:02,291 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:58:02,296 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:58:02,296 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:58:02,348 - src.web.server - INFO - Stopping bot...
+2025-12-04 06:58:03,853 - src.web.server - INFO - Bot stopped
+2025-12-04 06:58:04,358 - src.web.server - INFO - Bot stopped
+2025-12-04 06:58:04,362 - src.web.server - INFO - Bot stopped
+2025-12-04 06:58:05,251 - src.web.server - INFO - Bot stopped
+2025-12-04 06:59:52,684 - src.web.server - INFO - Starting bot...
+2025-12-04 06:59:52,684 - src.web.server - INFO - Starting bot...
+2025-12-04 06:59:52,805 - src.web.server - INFO - Starting bot...
+2025-12-04 06:59:52,843 - src.web.server - INFO - Starting bot...
+2025-12-04 06:59:53,770 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 06:59:53,770 - src.web.server - INFO - Webhook set: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 06:59:53,799 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 06:59:53,981 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:01:27,864 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:01:43,732 - src.bot.middlewares - INFO - Request processed in 15.868s
+2025-12-04 07:01:47,225 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:01:58,081 - src.bot.middlewares - INFO - Request processed in 10.856s
+2025-12-04 07:01:59,055 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-12-04 07:02:00,765 - src.services.generation - INFO - Video task enqueued: task_id=10
+2025-12-04 07:02:00,986 - src.bot.routers.video - INFO - Video task created: task_id=10, user=436680563, model=proteus_4x, cost=5
+2025-12-04 07:02:00,987 - src.bot.middlewares - INFO - Request processed in 1.932s
+2025-12-04 07:04:43,188 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:04:43,199 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:04:43,199 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:04:43,248 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:04:45,072 - src.web.server - INFO - Bot stopped
+2025-12-04 07:04:45,078 - src.web.server - INFO - Bot stopped
+2025-12-04 07:04:45,082 - src.web.server - INFO - Bot stopped
+2025-12-04 07:04:45,127 - src.web.server - INFO - Bot stopped
+2025-12-04 07:06:01,218 - src.web.server - INFO - Starting bot...
+2025-12-04 07:06:01,219 - src.web.server - INFO - Starting bot...
+2025-12-04 07:06:01,251 - src.web.server - INFO - Starting bot...
+2025-12-04 07:06:01,368 - src.web.server - INFO - Starting bot...
+2025-12-04 07:06:03,277 - src.web.server - INFO - Webhook set: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 07:06:03,294 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:06:03,321 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:06:03,366 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:06:16,561 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:06:24,751 - src.bot.middlewares - INFO - Request processed in 8.190s
+2025-12-04 07:06:27,434 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:06:29,321 - src.bot.middlewares - INFO - Request processed in 1.887s
+2025-12-04 07:06:30,419 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-12-04 07:06:33,308 - src.services.generation - INFO - Video task enqueued: task_id=11
+2025-12-04 07:06:33,570 - src.bot.routers.video - INFO - Video task created: task_id=11, user=436680563, model=proteus_4x, cost=5
+2025-12-04 07:06:33,571 - src.bot.middlewares - INFO - Request processed in 3.152s
+2025-12-04 07:13:32,268 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:13:32,357 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:13:32,358 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:13:32,359 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:13:34,107 - src.web.server - INFO - Bot stopped
+2025-12-04 07:13:34,191 - src.web.server - INFO - Bot stopped
+2025-12-04 07:13:34,203 - src.web.server - INFO - Bot stopped
+2025-12-04 07:13:34,212 - src.web.server - INFO - Bot stopped
+2025-12-04 07:13:59,818 - src.web.server - INFO - Starting bot...
+2025-12-04 07:13:59,822 - src.web.server - INFO - Starting bot...
+2025-12-04 07:13:59,823 - src.web.server - INFO - Starting bot...
+2025-12-04 07:13:59,824 - src.web.server - INFO - Starting bot...
+2025-12-04 07:14:00,852 - src.web.server - INFO - Webhook set: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 07:14:00,983 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:14:01,007 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:14:01,031 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:14:11,864 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:14:23,073 - src.bot.middlewares - INFO - Request processed in 11.209s
+2025-12-04 07:14:26,006 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:14:36,047 - src.bot.middlewares - INFO - Request processed in 10.042s
+2025-12-04 07:14:37,141 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-12-04 07:14:38,521 - src.services.generation - INFO - Video task enqueued: task_id=12
+2025-12-04 07:14:38,742 - src.bot.routers.video - INFO - Video task created: task_id=12, user=436680563, model=proteus_4x, cost=5
+2025-12-04 07:14:38,743 - src.bot.middlewares - INFO - Request processed in 1.602s
+2025-12-04 07:16:33,468 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:16:33,468 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:16:33,470 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:16:33,529 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:16:34,362 - src.web.server - INFO - Bot stopped
+2025-12-04 07:16:34,396 - src.web.server - INFO - Bot stopped
+2025-12-04 07:16:34,432 - src.web.server - INFO - Bot stopped
+2025-12-04 07:16:34,494 - src.web.server - INFO - Bot stopped
+2025-12-04 07:16:57,547 - src.web.server - INFO - Starting bot...
+2025-12-04 07:16:57,547 - src.web.server - INFO - Starting bot...
+2025-12-04 07:16:57,633 - src.web.server - INFO - Starting bot...
+2025-12-04 07:16:57,653 - src.web.server - INFO - Starting bot...
+2025-12-04 07:16:58,984 - src.web.server - INFO - Webhook set: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 07:16:59,004 - src.web.server - INFO - Webhook уже установлен: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 07:16:59,174 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:16:59,235 - src.web.server - INFO - Webhook уже установлен: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 07:17:08,012 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/buy
+2025-12-04 07:17:17,660 - src.bot.middlewares - INFO - Request processed in 9.648s
+2025-12-04 07:17:23,115 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=buy:small
+2025-12-04 07:17:36,705 - src.bot.middlewares - INFO - Request processed in 13.591s
+2025-12-04 07:17:36,927 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=buy:small
+2025-12-04 07:17:38,152 - src.bot.middlewares - ERROR - Error in handler, rolled back: Telegram server says - Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+Traceback (most recent call last):
+  File "/app/src/bot/middlewares.py", line 32, in __call__
+    result = await handler(event, data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 95, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/app/src/bot/routers/payment.py", line 54, in buy_package
+    await callback.message.edit_text(
+  File "/usr/local/lib/python3.11/site-packages/aiogram/methods/base.py", line 84, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/bot.py", line 487, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/base.py", line 254, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 189, in make_request
+    response = self.check_response(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/base.py", line 120, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2025-12-04 07:17:38,161 - src.bot.middlewares - ERROR - Error processing request (took 1.234s): Telegram server says - Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+Traceback (most recent call last):
+  File "/app/src/bot/middlewares.py", line 176, in __call__
+    result = await handler(event, data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 256, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 32, in __call__
+    result = await handler(event, data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 95, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/app/src/bot/routers/payment.py", line 54, in buy_package
+    await callback.message.edit_text(
+  File "/usr/local/lib/python3.11/site-packages/aiogram/methods/base.py", line 84, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/bot.py", line 487, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/base.py", line 254, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 189, in make_request
+    response = self.check_response(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/base.py", line 120, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2025-12-04 07:17:38,163 - src.bot.middlewares - ERROR - Unhandled error: Telegram server says - Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+Traceback (most recent call last):
+  File "/app/src/bot/middlewares.py", line 299, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 174, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 174, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/event/telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 176, in __call__
+    result = await handler(event, data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 256, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 32, in __call__
+    result = await handler(event, data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 95, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/app/src/bot/routers/payment.py", line 54, in buy_package
+    await callback.message.edit_text(
+  File "/usr/local/lib/python3.11/site-packages/aiogram/methods/base.py", line 84, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/bot.py", line 487, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/base.py", line 254, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 189, in make_request
+    response = self.check_response(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/base.py", line 120, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2025-12-04 07:17:38,585 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=pay_yoo:small
+2025-12-04 07:17:47,794 - src.bot.middlewares - INFO - Request processed in 9.209s
+2025-12-04 07:17:55,014 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=💰 Баланс
+2025-12-04 07:18:04,548 - src.bot.middlewares - INFO - Request processed in 9.534s
+2025-12-04 07:18:08,574 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:18:10,419 - src.bot.middlewares - INFO - Request processed in 1.846s
+2025-12-04 07:18:12,855 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:18:14,608 - src.bot.middlewares - INFO - Request processed in 1.753s
+2025-12-04 07:18:18,552 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-12-04 07:18:19,972 - src.services.generation - INFO - Video task enqueued: task_id=13
+2025-12-04 07:18:20,192 - src.bot.routers.video - INFO - Video task created: task_id=13, user=436680563, model=proteus_4x, cost=5
+2025-12-04 07:18:20,192 - src.bot.middlewares - INFO - Request processed in 1.640s
+2025-12-04 07:19:35,509 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:19:35,536 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:19:35,547 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:19:35,566 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:19:37,452 - src.web.server - INFO - Bot stopped
+2025-12-04 07:19:37,473 - src.web.server - INFO - Bot stopped
+2025-12-04 07:19:37,474 - src.web.server - INFO - Bot stopped
+2025-12-04 07:19:37,573 - src.web.server - INFO - Bot stopped
+2025-12-04 07:20:04,519 - src.web.server - INFO - Starting bot...
+2025-12-04 07:20:04,519 - src.web.server - INFO - Starting bot...
+2025-12-04 07:20:04,520 - src.web.server - INFO - Starting bot...
+2025-12-04 07:20:04,520 - src.web.server - INFO - Starting bot...
+2025-12-04 07:20:06,617 - src.web.server - INFO - Webhook set: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 07:20:06,771 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:20:06,771 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:20:06,771 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:20:34,291 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:20:47,020 - src.bot.middlewares - INFO - Request processed in 12.729s
+2025-12-04 07:20:50,849 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:21:01,820 - src.bot.middlewares - INFO - Request processed in 10.971s
+2025-12-04 07:21:42,030 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:21:52,720 - src.bot.middlewares - INFO - Request processed in 10.691s
+2025-12-04 07:21:56,890 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:21:58,708 - src.bot.middlewares - INFO - Request processed in 1.817s
+2025-12-04 07:30:48,625 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:30:48,630 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:30:48,632 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:30:48,657 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:30:50,422 - src.web.server - INFO - Bot stopped
+2025-12-04 07:30:50,433 - src.web.server - INFO - Bot stopped
+2025-12-04 07:30:50,435 - src.web.server - INFO - Bot stopped
+2025-12-04 07:30:50,447 - src.web.server - INFO - Bot stopped
+2025-12-04 07:31:15,995 - src.web.server - INFO - Starting bot...
+2025-12-04 07:31:16,048 - src.web.server - INFO - Starting bot...
+2025-12-04 07:31:16,077 - src.web.server - INFO - Starting bot...
+2025-12-04 07:31:16,092 - src.web.server - INFO - Starting bot...
+2025-12-04 07:31:16,964 - src.web.server - INFO - Webhook set: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 07:31:16,978 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:31:17,019 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:31:17,078 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:31:17,444 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:31:24,876 - src.bot.middlewares - INFO - Request processed in 7.432s
+2025-12-04 07:31:25,093 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:31:26,214 - src.bot.middlewares - INFO - Request processed in 1.121s
+2025-12-04 07:31:27,353 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:31:28,478 - src.bot.middlewares - INFO - Request processed in 1.125s
+2025-12-04 07:31:29,449 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-12-04 07:31:30,587 - src.services.users - INFO - Credits deducted: user_id=1, amount=5, old_balance=4028.5, new_balance=4023.5, description=Резерв: обработка видео (proteus_4x)
+2025-12-04 07:31:31,933 - src.services.generation - INFO - Video task enqueued: task_id=14
+2025-12-04 07:31:32,149 - src.bot.routers.video - INFO - Video task created: task_id=14, user=436680563, model=proteus_4x, cost=5, balance_reserved=True
+2025-12-04 07:31:32,151 - src.bot.middlewares - INFO - Request processed in 2.703s
+2025-12-04 07:35:30,377 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:35:30,379 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:35:30,407 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:35:30,417 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:35:31,254 - src.web.server - INFO - Bot stopped
+2025-12-04 07:35:31,260 - src.web.server - INFO - Bot stopped
+2025-12-04 07:35:31,269 - src.web.server - INFO - Bot stopped
+2025-12-04 07:35:31,348 - src.web.server - INFO - Bot stopped
+2025-12-04 07:35:56,494 - src.web.server - INFO - Starting bot...
+2025-12-04 07:35:56,494 - src.web.server - INFO - Starting bot...
+2025-12-04 07:35:56,494 - src.web.server - INFO - Starting bot...
+2025-12-04 07:35:56,577 - src.web.server - INFO - Starting bot...
+2025-12-04 07:35:57,853 - src.web.server - INFO - Webhook set: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 07:35:57,860 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:35:57,875 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:35:58,066 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:36:21,304 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:36:28,712 - src.bot.middlewares - INFO - Request processed in 7.408s
+2025-12-04 07:36:31,993 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:36:33,742 - src.bot.middlewares - INFO - Request processed in 1.749s
+2025-12-04 07:36:34,321 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-12-04 07:36:35,517 - src.services.users - INFO - Credits deducted: user_id=1, amount=5, old_balance=4028.5, new_balance=4023.5, description=Резерв: обработка видео (proteus_4x)
+2025-12-04 07:36:36,236 - src.services.generation - INFO - Video task enqueued: task_id=15
+2025-12-04 07:36:36,446 - src.bot.routers.video - INFO - Video task created: task_id=15, user=436680563, model=proteus_4x, cost=5, balance_reserved=True
+2025-12-04 07:36:36,447 - src.bot.middlewares - INFO - Request processed in 2.126s
+2025-12-04 07:39:49,492 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:39:49,492 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:39:49,501 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:39:49,504 - src.web.server - INFO - Stopping bot...
+2025-12-04 07:39:50,969 - src.web.server - INFO - Bot stopped
+2025-12-04 07:39:50,970 - src.web.server - INFO - Bot stopped
+2025-12-04 07:39:50,977 - src.web.server - INFO - Bot stopped
+2025-12-04 07:39:51,003 - src.web.server - INFO - Bot stopped
+2025-12-04 07:40:15,985 - src.web.server - INFO - Starting bot...
+2025-12-04 07:40:15,985 - src.web.server - INFO - Starting bot...
+2025-12-04 07:40:15,985 - src.web.server - INFO - Starting bot...
+2025-12-04 07:40:16,063 - src.web.server - INFO - Starting bot...
+2025-12-04 07:40:16,936 - src.web.server - INFO - Webhook set: https://9084bcfacdf7.ngrok-free.app/tg/webhook
+2025-12-04 07:40:16,964 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:40:17,014 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:40:17,014 - src.web.server - WARNING - TelegramRetryAfter при set_webhook (retry_after=1). Пропускаем установку вебхука на старте.
+2025-12-04 07:40:30,526 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:40:39,349 - src.bot.middlewares - INFO - Request processed in 8.822s
+2025-12-04 07:40:42,853 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:40:49,900 - src.bot.middlewares - INFO - Request processed in 7.047s
+2025-12-04 07:40:50,904 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-12-04 07:40:52,097 - src.services.users - INFO - Credits deducted: user_id=1, amount=5, old_balance=4028.5, new_balance=4023.5, description=Резерв: обработка видео (proteus_4x)
+2025-12-04 07:40:52,841 - src.services.generation - INFO - Video task enqueued: task_id=16
+2025-12-04 07:40:53,065 - src.bot.routers.video - INFO - Video task created: task_id=16, user=436680563, model=proteus_4x, cost=5, balance_reserved=True
+2025-12-04 07:40:53,066 - src.bot.middlewares - INFO - Request processed in 2.162s
+2025-12-04 07:42:23,435 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:42:25,026 - src.bot.middlewares - INFO - Request processed in 1.591s
+2025-12-04 07:42:29,665 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:42:38,950 - src.bot.middlewares - INFO - Request processed in 9.285s
+2025-12-04 07:42:44,043 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:apollo_60fps
+2025-12-04 07:42:45,196 - src.services.users - INFO - Credits deducted: user_id=1, amount=6, old_balance=4023.5, new_balance=4017.5, description=Резерв: обработка видео (apollo_60fps)
+2025-12-04 07:42:47,057 - src.services.generation - INFO - Video task enqueued: task_id=17
+2025-12-04 07:42:47,281 - src.bot.routers.video - INFO - Video task created: task_id=17, user=436680563, model=apollo_60fps, cost=6, balance_reserved=True
+2025-12-04 07:42:47,282 - src.bot.middlewares - INFO - Request processed in 3.239s
+2025-12-04 07:44:53,493 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=ℹ️ Помощь
+2025-12-04 07:44:55,232 - src.bot.middlewares - INFO - Request processed in 1.739s
+2025-12-04 07:45:08,230 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=📸 Улучшить фото
+2025-12-04 07:45:10,070 - src.bot.middlewares - INFO - Request processed in 1.840s
+2025-12-04 07:45:20,315 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:45:21,522 - src.bot.middlewares - INFO - Request processed in 1.207s
+2025-12-04 07:45:40,915 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=img_model:enhance_high_fidelity
+2025-12-04 07:45:49,809 - src.services.users - INFO - Credits deducted: user_id=1, amount=1.5, old_balance=4017.5, new_balance=4016.0, description=Резерв: обработка фото (enhance_high_fidelity)
+2025-12-04 07:45:51,268 - src.services.generation - INFO - Image task enqueued: task_id=18
+2025-12-04 07:45:51,624 - src.bot.routers.image - INFO - Image task created: task_id=18, user=436680563, model=enhance_high_fidelity, balance_reserved=True
+2025-12-04 07:45:51,625 - src.bot.middlewares - INFO - Request processed in 10.711s
+2025-12-04 07:50:52,611 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/start
+2025-12-04 07:50:54,386 - src.bot.middlewares - INFO - Request processed in 1.775s
+2025-12-04 07:50:55,305 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:50:56,499 - src.bot.middlewares - INFO - Request processed in 1.194s
+2025-12-04 07:50:59,381 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:51:01,092 - src.bot.middlewares - INFO - Request processed in 1.711s
+2025-12-04 07:51:09,448 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:artemis_denoise
+2025-12-04 07:51:10,634 - src.services.users - INFO - Credits deducted: user_id=1, amount=4, old_balance=4016.0, new_balance=4012.0, description=Резерв: обработка видео (artemis_denoise)
+2025-12-04 07:51:11,351 - src.services.generation - INFO - Video task enqueued: task_id=19
+2025-12-04 07:51:11,574 - src.bot.routers.video - INFO - Video task created: task_id=19, user=436680563, model=artemis_denoise, cost=4, balance_reserved=True
+2025-12-04 07:51:11,576 - src.bot.middlewares - INFO - Request processed in 2.128s
+2025-12-04 07:52:35,991 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/start
+2025-12-04 07:52:38,251 - src.bot.middlewares - INFO - Request processed in 2.260s
+2025-12-04 07:52:38,542 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=📸 Улучшить фото
+2025-12-04 07:52:39,718 - src.bot.middlewares - INFO - Request processed in 1.176s
+2025-12-04 07:52:45,788 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:52:46,955 - src.bot.middlewares - INFO - Request processed in 1.167s
+2025-12-04 07:52:52,334 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=img_model:enhance_redefine
+2025-12-04 07:52:53,502 - src.services.users - INFO - Credits deducted: user_id=1, amount=3.0, old_balance=4012.0, new_balance=4009.0, description=Резерв: обработка фото (enhance_redefine)
+2025-12-04 07:52:55,445 - src.services.generation - INFO - Image task enqueued: task_id=20
+2025-12-04 07:52:55,934 - src.bot.routers.image - INFO - Image task created: task_id=20, user=436680563, model=enhance_redefine, balance_reserved=True
+2025-12-04 07:52:55,935 - src.bot.middlewares - INFO - Request processed in 3.600s
+2025-12-04 07:53:05,282 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=📸 Улучшить фото
+2025-12-04 07:53:07,028 - telegram_safe - ERROR - Telegram API error: chat_id=436680563, error=HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+2025-12-04 07:53:07,495 - src.bot.middlewares - INFO - Request processed in 2.214s
+2025-12-04 07:53:39,028 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=📸 Улучшить фото
+2025-12-04 07:53:41,400 - src.bot.middlewares - INFO - Request processed in 2.372s
+2025-12-04 07:53:45,821 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:53:48,491 - src.bot.middlewares - INFO - Request processed in 2.670s
+2025-12-04 07:53:49,271 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=img_model:enhance_standard
+2025-12-04 07:53:50,426 - src.services.users - INFO - Credits deducted: user_id=1, amount=1.0, old_balance=4012.0, new_balance=4011.0, description=Резерв: обработка фото (enhance_standard)
+2025-12-04 07:53:51,319 - src.services.generation - INFO - Image task enqueued: task_id=21
+2025-12-04 07:53:51,726 - src.bot.routers.image - INFO - Image task created: task_id=21, user=436680563, model=enhance_standard, balance_reserved=True
+2025-12-04 07:53:51,727 - src.bot.middlewares - INFO - Request processed in 2.456s
+2025-12-04 07:55:11,712 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=📸 Улучшить фото
+2025-12-04 07:55:13,110 - telegram_safe - ERROR - Telegram API error: chat_id=436680563, error=HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+2025-12-04 07:55:13,576 - src.bot.middlewares - INFO - Request processed in 1.865s
+2025-12-04 07:55:20,210 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:55:22,776 - src.bot.middlewares - INFO - Request processed in 2.566s
+2025-12-04 07:55:26,150 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:55:28,428 - src.bot.middlewares - INFO - Request processed in 2.279s
+2025-12-04 07:55:36,454 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:55:37,608 - src.bot.middlewares - INFO - Request processed in 1.154s
+2025-12-04 07:55:44,996 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=img_model:sharpen_standard
+2025-12-04 07:55:46,185 - src.services.users - INFO - Credits deducted: user_id=1, amount=1.0, old_balance=4011.0, new_balance=4010.0, description=Резерв: обработка фото (sharpen_standard)
+2025-12-04 07:55:47,749 - src.services.generation - INFO - Image task enqueued: task_id=22
+2025-12-04 07:55:47,966 - src.bot.routers.image - INFO - Image task created: task_id=22, user=436680563, model=sharpen_standard, balance_reserved=True
+2025-12-04 07:55:47,968 - src.bot.middlewares - INFO - Request processed in 2.972s
+2025-12-04 07:56:03,415 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:56:05,514 - src.bot.middlewares - INFO - Request processed in 2.099s
+2025-12-04 07:56:15,412 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 07:56:17,282 - src.bot.middlewares - INFO - Request processed in 1.871s
+2025-12-04 07:58:31,360 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 07:58:34,104 - src.bot.middlewares - INFO - Request processed in 2.744s
+2025-12-04 07:58:34,744 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-12-04 07:58:36,566 - src.services.users - INFO - Credits deducted: user_id=1, amount=5, old_balance=4010.0, new_balance=4005.0, description=Резерв: обработка видео (proteus_4x)
+2025-12-04 07:58:37,293 - src.services.generation - INFO - Video task enqueued: task_id=23
+2025-12-04 07:58:37,547 - src.bot.routers.video - INFO - Video task created: task_id=23, user=436680563, model=proteus_4x, cost=5, balance_reserved=True
+2025-12-04 07:58:37,551 - src.bot.middlewares - INFO - Request processed in 2.807s
+2025-12-04 08:00:08,836 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-12-04 08:00:11,476 - src.bot.middlewares - INFO - Request processed in 2.640s
+2025-12-04 08:00:17,410 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-12-04 08:00:18,694 - src.bot.middlewares - INFO - Request processed in 1.284s
+2025-12-04 08:00:20,284 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:nyx_denoise
+2025-12-04 08:00:21,464 - src.services.users - INFO - Credits deducted: user_id=1, amount=3, old_balance=4005.0, new_balance=4002.0, description=Резерв: обработка видео (nyx_denoise)
+2025-12-04 08:00:22,216 - src.services.generation - INFO - Video task enqueued: task_id=24
+2025-12-04 08:00:22,430 - src.bot.routers.video - INFO - Video task created: task_id=24, user=436680563, model=nyx_denoise, cost=3, balance_reserved=True
+2025-12-04 08:00:22,431 - src.bot.middlewares - INFO - Request processed in 2.148s

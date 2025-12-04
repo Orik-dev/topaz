@@ -15,11 +15,12 @@ logger = logging.getLogger(__name__)
 
 
 async def _safe_refund(session, user, task, reason):
-    """Безопасный возврат генераций"""
+    """Безопасный возврат генераций - только при ошибках"""
     try:
         if task.status != TaskStatus.FAILED:
             return
         
+        # 🔥 ЭТО РЕАЛЬНЫЙ ВОЗВРАТ - баланс был списан при создании задачи
         await UserService.add_credits(
             session=session,
             user=user,
@@ -79,18 +80,8 @@ async def process_image_task(ctx: dict, task_id: int, user_telegram_id: int, ima
 
             logger.info(f"Image processed: task={task_id}, size={len(result)}")
 
-            # Списание
-            success = await UserService.deduct_credits(
-                session=session,
-                user=user,
-                amount=task.cost,
-                description=f"Обработка фото: {task.model}",
-                reference_type="task",
-                reference_id=task.id
-            )
-            
-            if not success:
-                raise TopazAPIError("Insufficient balance", user_message="Недостаточно генераций")
+            # 🔥 УБРАНО: deduct_credits - баланс УЖЕ списан при создании задачи!
+            # Просто отправляем результат пользователю
 
             img_file = BufferedInputFile(result, filename="result.jpg")
             await safe_send_photo(
@@ -119,6 +110,7 @@ async def process_image_task(ctx: dict, task_id: int, user_telegram_id: int, ima
             await session.flush()
             await session.commit()
 
+            # 🔥 ВОЗВРАТ - баланс был списан при создании, теперь возвращаем
             await _safe_refund(session, user, task, e.user_message or str(e))
 
             user_msg = e.user_message or "Ошибка обработки фото"
@@ -141,6 +133,7 @@ async def process_image_task(ctx: dict, task_id: int, user_telegram_id: int, ima
             await session.flush()
             await session.commit()
 
+            # 🔥 ВОЗВРАТ - баланс был списан при создании, теперь возвращаем
             await _safe_refund(session, user, task, "Внутренняя ошибка")
 
             await safe_send_text(
@@ -175,3 +168,4 @@ class WorkerSettings:
     keep_result = 3600
     on_startup = startup
     on_shutdown = shutdown
+    queue_name = "arq:image_queue"

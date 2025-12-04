@@ -22,6 +22,7 @@ class UserRateLimiter:
         Returns:
             (allowed: bool, remaining_seconds: int)
         """
+        redis = None
         try:
             redis = await aioredis.Redis(
                 host=settings.REDIS_HOST,
@@ -38,8 +39,6 @@ class UserRateLimiter:
                 # Первый запрос - устанавливаем TTL
                 await redis.expire(key, window)
             
-            await redis.aclose()
-            
             if count > limit:
                 # Получаем оставшееся время
                 ttl = await redis.ttl(key)
@@ -51,6 +50,12 @@ class UserRateLimiter:
             logger.error(f"Rate limiter error: {e}")
             # При ошибке разрешаем запрос
             return True, 0
+        finally:
+            if redis:
+                try:
+                    await redis.close()
+                except Exception:
+                    pass
 
 
 rate_limiter = UserRateLimiter()

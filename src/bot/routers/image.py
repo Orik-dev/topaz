@@ -10,6 +10,7 @@ from src.services.pricing import IMAGE_MODELS
 from src.utils.file_validator import file_validator
 from src.services.rate_limiter import rate_limiter
 from src.services.telegram_safe import safe_send_text, safe_answer, safe_edit_text
+from src.services.users import UserService
 import logging
 
 logger = logging.getLogger(__name__)
@@ -45,11 +46,11 @@ async def image_received(message: Message, state: FSMContext, user: User):
     """Фото получено - проверка и выбор модели"""
     photo = message.photo[-1]
     
-    # Проверка rate limit
+    # Проверка rate limit (увеличено для тестирования)
     allowed, remaining = await rate_limiter.check_limit(
         user.telegram_id,
         "image_upload",
-        10,  # 10 фото
+        30,  # ← УВЕЛИЧЕНО с 10 до 30
         3600  # в час
     )
     
@@ -124,27 +125,18 @@ async def process_image_model(
     model_info = IMAGE_MODELS[model_name]
     cost = model_info["cost"]
     
+    # Проверка баланса
     if user.balance < cost:
         await safe_answer(
             callback,
-            f"❌ Недостаточно генераций!\n\nТребуется: {int(cost)}\nУ вас: {int(user.balance)}\n\nИспользуйте /buy",
+            f"❌ Недостаточно генераций!\n\n"
+            f"Требуется: {int(cost)}\n"
+            f"У вас: {int(user.balance)}\n\n"
+            f"Используйте /buy",
             show_alert=True
         )
         await state.clear()
         return
-    
-    text = (
-        f"⏳ <b>Обработка началась...</b>\n\n"
-        f"📊 Модель: {model_info['description']}\n"
-        f"💰 Стоимость: {int(cost)} ген.\n\n"
-        f"Обычно занимает 10-30 секунд"
-    )
-    
-    await safe_edit_text(
-        message=callback.message,
-        text=text,
-        parse_mode="HTML"
-    )
     
     data = await state.get_data()
     file_id = data.get("file_id")
@@ -163,7 +155,42 @@ async def process_image_model(
             "face_enhancement_strength": 0.8
         }
     )
+    
+    # 🔥 КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: РЕЗЕРВИРУЕМ БАЛАНС СРАЗУ
+    success = await UserService.deduct_credits(
+        session=session,
+        user=user,
+        amount=cost,
+        description=f"Резерв: обработка фото ({model_name})",
+        reference_type="task_reserve",
+        reference_id=task.id
+    )
+    
+    if not success:
+        await safe_answer(
+            callback,
+            "❌ Недостаточно генераций!",
+            show_alert=True
+        )
+        await session.delete(task)
+        await session.commit()
+        await state.clear()
+        return
+    
     await session.commit()
+    
+    text = (
+        f"⏳ <b>Обработка началась...</b>\n\n"
+        f"📊 Модель: {model_info['description']}\n"
+        f"💰 Зарезервировано: {int(cost)} ген.\n\n"
+        f"Обычно занимает 10-30 секунд"
+    )
+    
+    await safe_edit_text(
+        message=callback.message,
+        text=text,
+        parse_mode="HTML"
+    )
     
     # Ставим в очередь ARQ
     await GenerationService.enqueue_image_task(
@@ -175,4 +202,7 @@ async def process_image_model(
     await state.clear()
     await safe_answer(callback)
     
-    logger.info(f"Image task created: task_id={task.id}, user={user.telegram_id}, model={model_name}")
+    logger.info(
+        f"Image task created: task_id={task.id}, user={user.telegram_id}, "
+        f"model={model_name}, balance_reserved=True"
+    )

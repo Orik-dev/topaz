@@ -21,8 +21,10 @@ COPY . .
 # Create directories
 RUN mkdir -p /app/logs /app/temp_inputs
 
-# Set permissions
-RUN chmod +x /app/cleanup_cron.sh || true
+# Set permissions for scripts
+RUN chmod +x /app/cleanup_cron.sh || true && \
+    chmod +x /app/run_image_worker.py || true && \
+    chmod +x /app/run_video_worker.py || true
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
@@ -34,7 +36,6 @@ CMD ["gunicorn", "src.web.server:app", \
     "--worker-class", "uvicorn.workers.UvicornWorker", \
     "--bind", "0.0.0.0:8000", \
     "--timeout", "120", \
-    "--keepalive", "5", \
     "--access-logfile", "/app/logs/access.log", \
     "--error-logfile", "/app/logs/error.log", \
     "--log-level", "info"]

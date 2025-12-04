@@ -1,0 +1,469 @@
+[2025-12-04 06:29:36 +0000] [1] [INFO] Starting gunicorn 21.2.0
+[2025-12-04 06:29:36 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-12-04 06:29:36 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-12-04 06:29:36 +0000] [7] [INFO] Booting worker with pid: 7
+[2025-12-04 06:29:36 +0000] [8] [INFO] Booting worker with pid: 8
+[2025-12-04 06:29:36 +0000] [9] [INFO] Booting worker with pid: 9
+[2025-12-04 06:29:36 +0000] [10] [INFO] Booting worker with pid: 10
+[2025-12-04 06:29:41 +0000] [7] [INFO] Started server process [7]
+[2025-12-04 06:29:41 +0000] [7] [INFO] Waiting for application startup.
+[2025-12-04 06:29:41 +0000] [8] [INFO] Started server process [8]
+[2025-12-04 06:29:41 +0000] [8] [INFO] Waiting for application startup.
+[2025-12-04 06:29:41 +0000] [9] [INFO] Started server process [9]
+[2025-12-04 06:29:41 +0000] [9] [INFO] Waiting for application startup.
+[2025-12-04 06:29:41 +0000] [10] [INFO] Started server process [10]
+[2025-12-04 06:29:41 +0000] [10] [INFO] Waiting for application startup.
+[2025-12-04 06:29:43 +0000] [7] [INFO] Application startup complete.
+[2025-12-04 06:29:43 +0000] [8] [INFO] Application startup complete.
+[2025-12-04 06:29:43 +0000] [9] [INFO] Application startup complete.
+[2025-12-04 06:29:43 +0000] [10] [INFO] Application startup complete.
+[2025-12-04 06:38:25 +0000] [1] [INFO] Handling signal: term
+[2025-12-04 06:38:25 +0000] [9] [INFO] Shutting down
+[2025-12-04 06:38:25 +0000] [8] [INFO] Shutting down
+[2025-12-04 06:38:25 +0000] [9] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:38:25 +0000] [8] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:38:25 +0000] [10] [INFO] Shutting down
+[2025-12-04 06:38:25 +0000] [10] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:38:25 +0000] [7] [INFO] Shutting down
+[2025-12-04 06:38:25 +0000] [7] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:38:25 +0000] [9] [INFO] Waiting for application shutdown.
+[2025-12-04 06:38:25 +0000] [8] [INFO] Waiting for application shutdown.
+[2025-12-04 06:38:25 +0000] [10] [INFO] Waiting for application shutdown.
+[2025-12-04 06:38:25 +0000] [7] [INFO] Waiting for application shutdown.
+[2025-12-04 06:38:27 +0000] [8] [INFO] Application shutdown complete.
+[2025-12-04 06:38:27 +0000] [8] [INFO] Finished server process [8]
+[2025-12-04 06:38:27 +0000] [8] [INFO] Worker exiting (pid: 8)
+[2025-12-04 06:38:27 +0000] [9] [INFO] Application shutdown complete.
+[2025-12-04 06:38:27 +0000] [7] [INFO] Application shutdown complete.
+[2025-12-04 06:38:27 +0000] [7] [INFO] Finished server process [7]
+[2025-12-04 06:38:27 +0000] [9] [INFO] Finished server process [9]
+[2025-12-04 06:38:27 +0000] [9] [INFO] Worker exiting (pid: 9)
+[2025-12-04 06:38:27 +0000] [7] [INFO] Worker exiting (pid: 7)
+[2025-12-04 06:38:27 +0000] [10] [INFO] Application shutdown complete.
+[2025-12-04 06:38:27 +0000] [10] [INFO] Finished server process [10]
+[2025-12-04 06:38:27 +0000] [10] [INFO] Worker exiting (pid: 10)
+[2025-12-04 06:38:28 +0000] [1] [INFO] Shutting down: Master
+[2025-12-04 06:39:30 +0000] [1] [INFO] Starting gunicorn 21.2.0
+[2025-12-04 06:39:30 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-12-04 06:39:30 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-12-04 06:39:30 +0000] [6] [INFO] Booting worker with pid: 6
+[2025-12-04 06:39:31 +0000] [7] [INFO] Booting worker with pid: 7
+[2025-12-04 06:39:31 +0000] [8] [INFO] Booting worker with pid: 8
+[2025-12-04 06:39:31 +0000] [9] [INFO] Booting worker with pid: 9
+[2025-12-04 06:39:35 +0000] [7] [INFO] Started server process [7]
+[2025-12-04 06:39:35 +0000] [6] [INFO] Started server process [6]
+[2025-12-04 06:39:35 +0000] [7] [INFO] Waiting for application startup.
+[2025-12-04 06:39:35 +0000] [6] [INFO] Waiting for application startup.
+[2025-12-04 06:39:35 +0000] [8] [INFO] Started server process [8]
+[2025-12-04 06:39:35 +0000] [9] [INFO] Started server process [9]
+[2025-12-04 06:39:35 +0000] [8] [INFO] Waiting for application startup.
+[2025-12-04 06:39:35 +0000] [9] [INFO] Waiting for application startup.
+[2025-12-04 06:39:37 +0000] [7] [INFO] Application startup complete.
+[2025-12-04 06:39:37 +0000] [6] [INFO] Application startup complete.
+[2025-12-04 06:39:37 +0000] [9] [INFO] Application startup complete.
+[2025-12-04 06:39:37 +0000] [8] [INFO] Application startup complete.
+[2025-12-04 06:48:32 +0000] [1] [INFO] Handling signal: term
+[2025-12-04 06:48:32 +0000] [9] [INFO] Shutting down
+[2025-12-04 06:48:32 +0000] [9] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:48:32 +0000] [7] [INFO] Shutting down
+[2025-12-04 06:48:32 +0000] [7] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:48:32 +0000] [8] [INFO] Shutting down
+[2025-12-04 06:48:32 +0000] [8] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:48:32 +0000] [6] [INFO] Shutting down
+[2025-12-04 06:48:32 +0000] [6] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:48:32 +0000] [9] [INFO] Waiting for application shutdown.
+[2025-12-04 06:48:32 +0000] [7] [INFO] Waiting for application shutdown.
+[2025-12-04 06:48:32 +0000] [8] [INFO] Waiting for application shutdown.
+[2025-12-04 06:48:32 +0000] [6] [INFO] Waiting for application shutdown.
+[2025-12-04 06:48:33 +0000] [8] [INFO] Application shutdown complete.
+[2025-12-04 06:48:33 +0000] [8] [INFO] Finished server process [8]
+[2025-12-04 06:48:33 +0000] [8] [INFO] Worker exiting (pid: 8)
+[2025-12-04 06:48:33 +0000] [6] [INFO] Application shutdown complete.
+[2025-12-04 06:48:33 +0000] [6] [INFO] Finished server process [6]
+[2025-12-04 06:48:33 +0000] [6] [INFO] Worker exiting (pid: 6)
+[2025-12-04 06:48:33 +0000] [9] [INFO] Application shutdown complete.
+[2025-12-04 06:48:33 +0000] [9] [INFO] Finished server process [9]
+[2025-12-04 06:48:33 +0000] [9] [INFO] Worker exiting (pid: 9)
+[2025-12-04 06:48:34 +0000] [7] [INFO] Application shutdown complete.
+[2025-12-04 06:48:34 +0000] [7] [INFO] Finished server process [7]
+[2025-12-04 06:48:34 +0000] [7] [INFO] Worker exiting (pid: 7)
+[2025-12-04 06:48:35 +0000] [1] [INFO] Shutting down: Master
+[2025-12-04 06:49:57 +0000] [1] [INFO] Starting gunicorn 21.2.0
+[2025-12-04 06:49:57 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-12-04 06:49:57 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-12-04 06:49:57 +0000] [7] [INFO] Booting worker with pid: 7
+[2025-12-04 06:49:57 +0000] [8] [INFO] Booting worker with pid: 8
+[2025-12-04 06:49:57 +0000] [9] [INFO] Booting worker with pid: 9
+[2025-12-04 06:49:57 +0000] [10] [INFO] Booting worker with pid: 10
+[2025-12-04 06:50:01 +0000] [7] [INFO] Started server process [7]
+[2025-12-04 06:50:01 +0000] [9] [INFO] Started server process [9]
+[2025-12-04 06:50:01 +0000] [10] [INFO] Started server process [10]
+[2025-12-04 06:50:01 +0000] [7] [INFO] Waiting for application startup.
+[2025-12-04 06:50:01 +0000] [9] [INFO] Waiting for application startup.
+[2025-12-04 06:50:01 +0000] [10] [INFO] Waiting for application startup.
+[2025-12-04 06:50:02 +0000] [8] [INFO] Started server process [8]
+[2025-12-04 06:50:02 +0000] [8] [INFO] Waiting for application startup.
+[2025-12-04 06:50:03 +0000] [10] [INFO] Application startup complete.
+[2025-12-04 06:50:03 +0000] [8] [INFO] Application startup complete.
+[2025-12-04 06:50:03 +0000] [9] [INFO] Application startup complete.
+[2025-12-04 06:50:03 +0000] [7] [INFO] Application startup complete.
+[2025-12-04 06:58:02 +0000] [1] [INFO] Handling signal: term
+[2025-12-04 06:58:02 +0000] [7] [INFO] Shutting down
+[2025-12-04 06:58:02 +0000] [10] [INFO] Shutting down
+[2025-12-04 06:58:02 +0000] [8] [INFO] Shutting down
+[2025-12-04 06:58:02 +0000] [7] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:58:02 +0000] [10] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:58:02 +0000] [8] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:58:02 +0000] [9] [INFO] Shutting down
+[2025-12-04 06:58:02 +0000] [9] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 06:58:02 +0000] [7] [INFO] Waiting for application shutdown.
+[2025-12-04 06:58:02 +0000] [8] [INFO] Waiting for application shutdown.
+[2025-12-04 06:58:02 +0000] [10] [INFO] Waiting for application shutdown.
+[2025-12-04 06:58:02 +0000] [9] [INFO] Waiting for application shutdown.
+[2025-12-04 06:58:03 +0000] [9] [INFO] Application shutdown complete.
+[2025-12-04 06:58:03 +0000] [9] [INFO] Finished server process [9]
+[2025-12-04 06:58:03 +0000] [9] [INFO] Worker exiting (pid: 9)
+[2025-12-04 06:58:04 +0000] [8] [INFO] Application shutdown complete.
+[2025-12-04 06:58:04 +0000] [8] [INFO] Finished server process [8]
+[2025-12-04 06:58:04 +0000] [10] [INFO] Application shutdown complete.
+[2025-12-04 06:58:04 +0000] [8] [INFO] Worker exiting (pid: 8)
+[2025-12-04 06:58:04 +0000] [10] [INFO] Finished server process [10]
+[2025-12-04 06:58:04 +0000] [10] [INFO] Worker exiting (pid: 10)
+[2025-12-04 06:58:05 +0000] [7] [INFO] Application shutdown complete.
+[2025-12-04 06:58:05 +0000] [7] [INFO] Finished server process [7]
+[2025-12-04 06:58:05 +0000] [7] [INFO] Worker exiting (pid: 7)
+[2025-12-04 06:58:05 +0000] [1] [INFO] Shutting down: Master
+[2025-12-04 06:59:47 +0000] [1] [INFO] Starting gunicorn 21.2.0
+[2025-12-04 06:59:47 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-12-04 06:59:47 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-12-04 06:59:47 +0000] [7] [INFO] Booting worker with pid: 7
+[2025-12-04 06:59:48 +0000] [8] [INFO] Booting worker with pid: 8
+[2025-12-04 06:59:48 +0000] [9] [INFO] Booting worker with pid: 9
+[2025-12-04 06:59:48 +0000] [10] [INFO] Booting worker with pid: 10
+[2025-12-04 06:59:52 +0000] [8] [INFO] Started server process [8]
+[2025-12-04 06:59:52 +0000] [7] [INFO] Started server process [7]
+[2025-12-04 06:59:52 +0000] [8] [INFO] Waiting for application startup.
+[2025-12-04 06:59:52 +0000] [7] [INFO] Waiting for application startup.
+[2025-12-04 06:59:52 +0000] [9] [INFO] Started server process [9]
+[2025-12-04 06:59:52 +0000] [9] [INFO] Waiting for application startup.
+[2025-12-04 06:59:52 +0000] [10] [INFO] Started server process [10]
+[2025-12-04 06:59:52 +0000] [10] [INFO] Waiting for application startup.
+[2025-12-04 06:59:53 +0000] [8] [INFO] Application startup complete.
+[2025-12-04 06:59:53 +0000] [9] [INFO] Application startup complete.
+[2025-12-04 06:59:53 +0000] [7] [INFO] Application startup complete.
+[2025-12-04 06:59:53 +0000] [10] [INFO] Application startup complete.
+[2025-12-04 07:04:43 +0000] [1] [INFO] Handling signal: term
+[2025-12-04 07:04:43 +0000] [8] [INFO] Shutting down
+[2025-12-04 07:04:43 +0000] [8] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:04:43 +0000] [9] [INFO] Shutting down
+[2025-12-04 07:04:43 +0000] [10] [INFO] Shutting down
+[2025-12-04 07:04:43 +0000] [9] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:04:43 +0000] [10] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:04:43 +0000] [7] [INFO] Shutting down
+[2025-12-04 07:04:43 +0000] [7] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:04:43 +0000] [8] [INFO] Waiting for application shutdown.
+[2025-12-04 07:04:43 +0000] [10] [INFO] Waiting for application shutdown.
+[2025-12-04 07:04:43 +0000] [9] [INFO] Waiting for application shutdown.
+[2025-12-04 07:04:43 +0000] [7] [INFO] Waiting for application shutdown.
+[2025-12-04 07:04:45 +0000] [8] [INFO] Application shutdown complete.
+[2025-12-04 07:04:45 +0000] [8] [INFO] Finished server process [8]
+[2025-12-04 07:04:45 +0000] [8] [INFO] Worker exiting (pid: 8)
+[2025-12-04 07:04:45 +0000] [9] [INFO] Application shutdown complete.
+[2025-12-04 07:04:45 +0000] [9] [INFO] Finished server process [9]
+[2025-12-04 07:04:45 +0000] [9] [INFO] Worker exiting (pid: 9)
+[2025-12-04 07:04:45 +0000] [10] [INFO] Application shutdown complete.
+[2025-12-04 07:04:45 +0000] [10] [INFO] Finished server process [10]
+[2025-12-04 07:04:45 +0000] [10] [INFO] Worker exiting (pid: 10)
+[2025-12-04 07:04:45 +0000] [7] [INFO] Application shutdown complete.
+[2025-12-04 07:04:45 +0000] [7] [INFO] Finished server process [7]
+[2025-12-04 07:04:45 +0000] [7] [INFO] Worker exiting (pid: 7)
+[2025-12-04 07:04:46 +0000] [1] [INFO] Shutting down: Master
+[2025-12-04 07:05:56 +0000] [1] [INFO] Starting gunicorn 21.2.0
+[2025-12-04 07:05:56 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-12-04 07:05:56 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-12-04 07:05:56 +0000] [7] [INFO] Booting worker with pid: 7
+[2025-12-04 07:05:56 +0000] [8] [INFO] Booting worker with pid: 8
+[2025-12-04 07:05:56 +0000] [9] [INFO] Booting worker with pid: 9
+[2025-12-04 07:05:56 +0000] [10] [INFO] Booting worker with pid: 10
+[2025-12-04 07:06:01 +0000] [7] [INFO] Started server process [7]
+[2025-12-04 07:06:01 +0000] [7] [INFO] Waiting for application startup.
+[2025-12-04 07:06:01 +0000] [8] [INFO] Started server process [8]
+[2025-12-04 07:06:01 +0000] [8] [INFO] Waiting for application startup.
+[2025-12-04 07:06:01 +0000] [9] [INFO] Started server process [9]
+[2025-12-04 07:06:01 +0000] [9] [INFO] Waiting for application startup.
+[2025-12-04 07:06:01 +0000] [10] [INFO] Started server process [10]
+[2025-12-04 07:06:01 +0000] [10] [INFO] Waiting for application startup.
+[2025-12-04 07:06:03 +0000] [8] [INFO] Application startup complete.
+[2025-12-04 07:06:03 +0000] [9] [INFO] Application startup complete.
+[2025-12-04 07:06:03 +0000] [7] [INFO] Application startup complete.
+[2025-12-04 07:06:03 +0000] [10] [INFO] Application startup complete.
+[2025-12-04 07:13:32 +0000] [1] [INFO] Handling signal: term
+[2025-12-04 07:13:32 +0000] [10] [INFO] Shutting down
+[2025-12-04 07:13:32 +0000] [10] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:13:32 +0000] [8] [INFO] Shutting down
+[2025-12-04 07:13:32 +0000] [7] [INFO] Shutting down
+[2025-12-04 07:13:32 +0000] [9] [INFO] Shutting down
+[2025-12-04 07:13:32 +0000] [8] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:13:32 +0000] [9] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:13:32 +0000] [7] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:13:32 +0000] [10] [INFO] Waiting for application shutdown.
+[2025-12-04 07:13:32 +0000] [8] [INFO] Waiting for application shutdown.
+[2025-12-04 07:13:32 +0000] [9] [INFO] Waiting for application shutdown.
+[2025-12-04 07:13:32 +0000] [7] [INFO] Waiting for application shutdown.
+[2025-12-04 07:13:34 +0000] [10] [INFO] Application shutdown complete.
+[2025-12-04 07:13:34 +0000] [10] [INFO] Finished server process [10]
+[2025-12-04 07:13:34 +0000] [10] [INFO] Worker exiting (pid: 10)
+[2025-12-04 07:13:34 +0000] [9] [INFO] Application shutdown complete.
+[2025-12-04 07:13:34 +0000] [9] [INFO] Finished server process [9]
+[2025-12-04 07:13:34 +0000] [9] [INFO] Worker exiting (pid: 9)
+[2025-12-04 07:13:34 +0000] [7] [INFO] Application shutdown complete.
+[2025-12-04 07:13:34 +0000] [7] [INFO] Finished server process [7]
+[2025-12-04 07:13:34 +0000] [7] [INFO] Worker exiting (pid: 7)
+[2025-12-04 07:13:34 +0000] [8] [INFO] Application shutdown complete.
+[2025-12-04 07:13:34 +0000] [8] [INFO] Finished server process [8]
+[2025-12-04 07:13:34 +0000] [8] [INFO] Worker exiting (pid: 8)
+[2025-12-04 07:13:36 +0000] [1] [INFO] Shutting down: Master
+[2025-12-04 07:13:54 +0000] [1] [INFO] Starting gunicorn 21.2.0
+[2025-12-04 07:13:54 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-12-04 07:13:54 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-12-04 07:13:54 +0000] [7] [INFO] Booting worker with pid: 7
+[2025-12-04 07:13:54 +0000] [8] [INFO] Booting worker with pid: 8
+[2025-12-04 07:13:54 +0000] [9] [INFO] Booting worker with pid: 9
+[2025-12-04 07:13:54 +0000] [10] [INFO] Booting worker with pid: 10
+[2025-12-04 07:13:59 +0000] [7] [INFO] Started server process [7]
+[2025-12-04 07:13:59 +0000] [9] [INFO] Started server process [9]
+[2025-12-04 07:13:59 +0000] [7] [INFO] Waiting for application startup.
+[2025-12-04 07:13:59 +0000] [10] [INFO] Started server process [10]
+[2025-12-04 07:13:59 +0000] [9] [INFO] Waiting for application startup.
+[2025-12-04 07:13:59 +0000] [8] [INFO] Started server process [8]
+[2025-12-04 07:13:59 +0000] [10] [INFO] Waiting for application startup.
+[2025-12-04 07:13:59 +0000] [8] [INFO] Waiting for application startup.
+[2025-12-04 07:14:00 +0000] [7] [INFO] Application startup complete.
+[2025-12-04 07:14:00 +0000] [8] [INFO] Application startup complete.
+[2025-12-04 07:14:01 +0000] [10] [INFO] Application startup complete.
+[2025-12-04 07:14:01 +0000] [9] [INFO] Application startup complete.
+[2025-12-04 07:16:33 +0000] [1] [INFO] Handling signal: term
+[2025-12-04 07:16:33 +0000] [10] [INFO] Shutting down
+[2025-12-04 07:16:33 +0000] [8] [INFO] Shutting down
+[2025-12-04 07:16:33 +0000] [7] [INFO] Shutting down
+[2025-12-04 07:16:33 +0000] [10] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:16:33 +0000] [8] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:16:33 +0000] [7] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:16:33 +0000] [9] [INFO] Shutting down
+[2025-12-04 07:16:33 +0000] [9] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:16:33 +0000] [8] [INFO] Waiting for application shutdown.
+[2025-12-04 07:16:33 +0000] [7] [INFO] Waiting for application shutdown.
+[2025-12-04 07:16:33 +0000] [10] [INFO] Waiting for application shutdown.
+[2025-12-04 07:16:33 +0000] [9] [INFO] Waiting for application shutdown.
+[2025-12-04 07:16:34 +0000] [8] [INFO] Application shutdown complete.
+[2025-12-04 07:16:34 +0000] [8] [INFO] Finished server process [8]
+[2025-12-04 07:16:34 +0000] [8] [INFO] Worker exiting (pid: 8)
+[2025-12-04 07:16:34 +0000] [7] [INFO] Application shutdown complete.
+[2025-12-04 07:16:34 +0000] [7] [INFO] Finished server process [7]
+[2025-12-04 07:16:34 +0000] [7] [INFO] Worker exiting (pid: 7)
+[2025-12-04 07:16:34 +0000] [10] [INFO] Application shutdown complete.
+[2025-12-04 07:16:34 +0000] [10] [INFO] Finished server process [10]
+[2025-12-04 07:16:34 +0000] [10] [INFO] Worker exiting (pid: 10)
+[2025-12-04 07:16:34 +0000] [9] [INFO] Application shutdown complete.
+[2025-12-04 07:16:34 +0000] [9] [INFO] Finished server process [9]
+[2025-12-04 07:16:34 +0000] [9] [INFO] Worker exiting (pid: 9)
+[2025-12-04 07:16:35 +0000] [1] [INFO] Shutting down: Master
+[2025-12-04 07:16:53 +0000] [1] [INFO] Starting gunicorn 21.2.0
+[2025-12-04 07:16:53 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-12-04 07:16:53 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-12-04 07:16:53 +0000] [7] [INFO] Booting worker with pid: 7
+[2025-12-04 07:16:53 +0000] [8] [INFO] Booting worker with pid: 8
+[2025-12-04 07:16:53 +0000] [9] [INFO] Booting worker with pid: 9
+[2025-12-04 07:16:53 +0000] [10] [INFO] Booting worker with pid: 10
+[2025-12-04 07:16:57 +0000] [7] [INFO] Started server process [7]
+[2025-12-04 07:16:57 +0000] [8] [INFO] Started server process [8]
+[2025-12-04 07:16:57 +0000] [7] [INFO] Waiting for application startup.
+[2025-12-04 07:16:57 +0000] [8] [INFO] Waiting for application startup.
+[2025-12-04 07:16:57 +0000] [9] [INFO] Started server process [9]
+[2025-12-04 07:16:57 +0000] [9] [INFO] Waiting for application startup.
+[2025-12-04 07:16:57 +0000] [10] [INFO] Started server process [10]
+[2025-12-04 07:16:57 +0000] [10] [INFO] Waiting for application startup.
+[2025-12-04 07:16:58 +0000] [8] [INFO] Application startup complete.
+[2025-12-04 07:16:59 +0000] [9] [INFO] Application startup complete.
+[2025-12-04 07:16:59 +0000] [10] [INFO] Application startup complete.
+[2025-12-04 07:16:59 +0000] [7] [INFO] Application startup complete.
+[2025-12-04 07:19:35 +0000] [1] [INFO] Handling signal: term
+[2025-12-04 07:19:35 +0000] [8] [INFO] Shutting down
+[2025-12-04 07:19:35 +0000] [8] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:19:35 +0000] [7] [INFO] Shutting down
+[2025-12-04 07:19:35 +0000] [7] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:19:35 +0000] [9] [INFO] Shutting down
+[2025-12-04 07:19:35 +0000] [9] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:19:35 +0000] [10] [INFO] Shutting down
+[2025-12-04 07:19:35 +0000] [10] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:19:35 +0000] [8] [INFO] Waiting for application shutdown.
+[2025-12-04 07:19:35 +0000] [7] [INFO] Waiting for application shutdown.
+[2025-12-04 07:19:35 +0000] [9] [INFO] Waiting for application shutdown.
+[2025-12-04 07:19:35 +0000] [10] [INFO] Waiting for application shutdown.
+[2025-12-04 07:19:37 +0000] [8] [INFO] Application shutdown complete.
+[2025-12-04 07:19:37 +0000] [8] [INFO] Finished server process [8]
+[2025-12-04 07:19:37 +0000] [8] [INFO] Worker exiting (pid: 8)
+[2025-12-04 07:19:37 +0000] [7] [INFO] Application shutdown complete.
+[2025-12-04 07:19:37 +0000] [9] [INFO] Application shutdown complete.
+[2025-12-04 07:19:37 +0000] [7] [INFO] Finished server process [7]
+[2025-12-04 07:19:37 +0000] [9] [INFO] Finished server process [9]
+[2025-12-04 07:19:37 +0000] [7] [INFO] Worker exiting (pid: 7)
+[2025-12-04 07:19:37 +0000] [9] [INFO] Worker exiting (pid: 9)
+[2025-12-04 07:19:37 +0000] [10] [INFO] Application shutdown complete.
+[2025-12-04 07:19:37 +0000] [10] [INFO] Finished server process [10]
+[2025-12-04 07:19:37 +0000] [10] [INFO] Worker exiting (pid: 10)
+[2025-12-04 07:19:39 +0000] [1] [INFO] Shutting down: Master
+[2025-12-04 07:19:58 +0000] [1] [INFO] Starting gunicorn 21.2.0
+[2025-12-04 07:19:58 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-12-04 07:19:58 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-12-04 07:19:58 +0000] [7] [INFO] Booting worker with pid: 7
+[2025-12-04 07:19:58 +0000] [8] [INFO] Booting worker with pid: 8
+[2025-12-04 07:19:59 +0000] [9] [INFO] Booting worker with pid: 9
+[2025-12-04 07:19:59 +0000] [10] [INFO] Booting worker with pid: 10
+[2025-12-04 07:20:04 +0000] [9] [INFO] Started server process [9]
+[2025-12-04 07:20:04 +0000] [7] [INFO] Started server process [7]
+[2025-12-04 07:20:04 +0000] [8] [INFO] Started server process [8]
+[2025-12-04 07:20:04 +0000] [9] [INFO] Waiting for application startup.
+[2025-12-04 07:20:04 +0000] [10] [INFO] Started server process [10]
+[2025-12-04 07:20:04 +0000] [7] [INFO] Waiting for application startup.
+[2025-12-04 07:20:04 +0000] [8] [INFO] Waiting for application startup.
+[2025-12-04 07:20:04 +0000] [10] [INFO] Waiting for application startup.
+[2025-12-04 07:20:06 +0000] [7] [INFO] Application startup complete.
+[2025-12-04 07:20:06 +0000] [8] [INFO] Application startup complete.
+[2025-12-04 07:20:06 +0000] [10] [INFO] Application startup complete.
+[2025-12-04 07:20:06 +0000] [9] [INFO] Application startup complete.
+[2025-12-04 07:30:48 +0000] [1] [INFO] Handling signal: term
+[2025-12-04 07:30:48 +0000] [7] [INFO] Shutting down
+[2025-12-04 07:30:48 +0000] [9] [INFO] Shutting down
+[2025-12-04 07:30:48 +0000] [7] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:30:48 +0000] [9] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:30:48 +0000] [10] [INFO] Shutting down
+[2025-12-04 07:30:48 +0000] [10] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:30:48 +0000] [8] [INFO] Shutting down
+[2025-12-04 07:30:48 +0000] [8] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:30:48 +0000] [7] [INFO] Waiting for application shutdown.
+[2025-12-04 07:30:48 +0000] [9] [INFO] Waiting for application shutdown.
+[2025-12-04 07:30:48 +0000] [10] [INFO] Waiting for application shutdown.
+[2025-12-04 07:30:48 +0000] [8] [INFO] Waiting for application shutdown.
+[2025-12-04 07:30:50 +0000] [7] [INFO] Application shutdown complete.
+[2025-12-04 07:30:50 +0000] [7] [INFO] Finished server process [7]
+[2025-12-04 07:30:50 +0000] [7] [INFO] Worker exiting (pid: 7)
+[2025-12-04 07:30:50 +0000] [9] [INFO] Application shutdown complete.
+[2025-12-04 07:30:50 +0000] [9] [INFO] Finished server process [9]
+[2025-12-04 07:30:50 +0000] [10] [INFO] Application shutdown complete.
+[2025-12-04 07:30:50 +0000] [10] [INFO] Finished server process [10]
+[2025-12-04 07:30:50 +0000] [10] [INFO] Worker exiting (pid: 10)
+[2025-12-04 07:30:50 +0000] [9] [INFO] Worker exiting (pid: 9)
+[2025-12-04 07:30:50 +0000] [8] [INFO] Application shutdown complete.
+[2025-12-04 07:30:50 +0000] [8] [INFO] Finished server process [8]
+[2025-12-04 07:30:50 +0000] [8] [INFO] Worker exiting (pid: 8)
+[2025-12-04 07:30:51 +0000] [1] [INFO] Shutting down: Master
+[2025-12-04 07:31:11 +0000] [1] [INFO] Starting gunicorn 21.2.0
+[2025-12-04 07:31:11 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-12-04 07:31:11 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-12-04 07:31:11 +0000] [7] [INFO] Booting worker with pid: 7
+[2025-12-04 07:31:11 +0000] [8] [INFO] Booting worker with pid: 8
+[2025-12-04 07:31:11 +0000] [9] [INFO] Booting worker with pid: 9
+[2025-12-04 07:31:11 +0000] [10] [INFO] Booting worker with pid: 10
+[2025-12-04 07:31:15 +0000] [7] [INFO] Started server process [7]
+[2025-12-04 07:31:15 +0000] [7] [INFO] Waiting for application startup.
+[2025-12-04 07:31:16 +0000] [8] [INFO] Started server process [8]
+[2025-12-04 07:31:16 +0000] [8] [INFO] Waiting for application startup.
+[2025-12-04 07:31:16 +0000] [10] [INFO] Started server process [10]
+[2025-12-04 07:31:16 +0000] [10] [INFO] Waiting for application startup.
+[2025-12-04 07:31:16 +0000] [9] [INFO] Started server process [9]
+[2025-12-04 07:31:16 +0000] [9] [INFO] Waiting for application startup.
+[2025-12-04 07:31:16 +0000] [7] [INFO] Application startup complete.
+[2025-12-04 07:31:16 +0000] [8] [INFO] Application startup complete.
+[2025-12-04 07:31:17 +0000] [9] [INFO] Application startup complete.
+[2025-12-04 07:31:17 +0000] [10] [INFO] Application startup complete.
+[2025-12-04 07:35:30 +0000] [1] [INFO] Handling signal: term
+[2025-12-04 07:35:30 +0000] [10] [INFO] Shutting down
+[2025-12-04 07:35:30 +0000] [10] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:35:30 +0000] [7] [INFO] Shutting down
+[2025-12-04 07:35:30 +0000] [7] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:35:30 +0000] [8] [INFO] Shutting down
+[2025-12-04 07:35:30 +0000] [8] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:35:30 +0000] [9] [INFO] Shutting down
+[2025-12-04 07:35:30 +0000] [9] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:35:30 +0000] [10] [INFO] Waiting for application shutdown.
+[2025-12-04 07:35:30 +0000] [7] [INFO] Waiting for application shutdown.
+[2025-12-04 07:35:30 +0000] [8] [INFO] Waiting for application shutdown.
+[2025-12-04 07:35:30 +0000] [9] [INFO] Waiting for application shutdown.
+[2025-12-04 07:35:31 +0000] [7] [INFO] Application shutdown complete.
+[2025-12-04 07:35:31 +0000] [7] [INFO] Finished server process [7]
+[2025-12-04 07:35:31 +0000] [10] [INFO] Application shutdown complete.
+[2025-12-04 07:35:31 +0000] [7] [INFO] Worker exiting (pid: 7)
+[2025-12-04 07:35:31 +0000] [10] [INFO] Finished server process [10]
+[2025-12-04 07:35:31 +0000] [8] [INFO] Application shutdown complete.
+[2025-12-04 07:35:31 +0000] [8] [INFO] Finished server process [8]
+[2025-12-04 07:35:31 +0000] [10] [INFO] Worker exiting (pid: 10)
+[2025-12-04 07:35:31 +0000] [8] [INFO] Worker exiting (pid: 8)
+[2025-12-04 07:35:31 +0000] [9] [INFO] Application shutdown complete.
+[2025-12-04 07:35:31 +0000] [9] [INFO] Finished server process [9]
+[2025-12-04 07:35:31 +0000] [9] [INFO] Worker exiting (pid: 9)
+[2025-12-04 07:35:32 +0000] [1] [INFO] Shutting down: Master
+[2025-12-04 07:35:52 +0000] [1] [INFO] Starting gunicorn 21.2.0
+[2025-12-04 07:35:52 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-12-04 07:35:52 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-12-04 07:35:52 +0000] [7] [INFO] Booting worker with pid: 7
+[2025-12-04 07:35:52 +0000] [8] [INFO] Booting worker with pid: 8
+[2025-12-04 07:35:52 +0000] [9] [INFO] Booting worker with pid: 9
+[2025-12-04 07:35:52 +0000] [10] [INFO] Booting worker with pid: 10
+[2025-12-04 07:35:56 +0000] [7] [INFO] Started server process [7]
+[2025-12-04 07:35:56 +0000] [7] [INFO] Waiting for application startup.
+[2025-12-04 07:35:56 +0000] [9] [INFO] Started server process [9]
+[2025-12-04 07:35:56 +0000] [8] [INFO] Started server process [8]
+[2025-12-04 07:35:56 +0000] [9] [INFO] Waiting for application startup.
+[2025-12-04 07:35:56 +0000] [8] [INFO] Waiting for application startup.
+[2025-12-04 07:35:56 +0000] [10] [INFO] Started server process [10]
+[2025-12-04 07:35:56 +0000] [10] [INFO] Waiting for application startup.
+[2025-12-04 07:35:57 +0000] [8] [INFO] Application startup complete.
+[2025-12-04 07:35:57 +0000] [9] [INFO] Application startup complete.
+[2025-12-04 07:35:57 +0000] [7] [INFO] Application startup complete.
+[2025-12-04 07:35:58 +0000] [10] [INFO] Application startup complete.
+[2025-12-04 07:39:49 +0000] [1] [INFO] Handling signal: term
+[2025-12-04 07:39:49 +0000] [9] [INFO] Shutting down
+[2025-12-04 07:39:49 +0000] [7] [INFO] Shutting down
+[2025-12-04 07:39:49 +0000] [9] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:39:49 +0000] [7] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:39:49 +0000] [10] [INFO] Shutting down
+[2025-12-04 07:39:49 +0000] [10] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:39:49 +0000] [8] [INFO] Shutting down
+[2025-12-04 07:39:49 +0000] [8] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-12-04 07:39:49 +0000] [9] [INFO] Waiting for application shutdown.
+[2025-12-04 07:39:49 +0000] [7] [INFO] Waiting for application shutdown.
+[2025-12-04 07:39:49 +0000] [10] [INFO] Waiting for application shutdown.
+[2025-12-04 07:39:49 +0000] [8] [INFO] Waiting for application shutdown.
+[2025-12-04 07:39:50 +0000] [8] [INFO] Application shutdown complete.
+[2025-12-04 07:39:50 +0000] [7] [INFO] Application shutdown complete.
+[2025-12-04 07:39:50 +0000] [8] [INFO] Finished server process [8]
+[2025-12-04 07:39:50 +0000] [7] [INFO] Finished server process [7]
+[2025-12-04 07:39:50 +0000] [8] [INFO] Worker exiting (pid: 8)
+[2025-12-04 07:39:50 +0000] [7] [INFO] Worker exiting (pid: 7)
+[2025-12-04 07:39:50 +0000] [9] [INFO] Application shutdown complete.
+[2025-12-04 07:39:50 +0000] [9] [INFO] Finished server process [9]
+[2025-12-04 07:39:50 +0000] [9] [INFO] Worker exiting (pid: 9)
+[2025-12-04 07:39:51 +0000] [10] [INFO] Application shutdown complete.
+[2025-12-04 07:39:51 +0000] [10] [INFO] Finished server process [10]
+[2025-12-04 07:39:51 +0000] [10] [INFO] Worker exiting (pid: 10)
+[2025-12-04 07:39:54 +0000] [1] [INFO] Shutting down: Master
+[2025-12-04 07:40:10 +0000] [1] [INFO] Starting gunicorn 21.2.0
+[2025-12-04 07:40:10 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-12-04 07:40:10 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-12-04 07:40:10 +0000] [7] [INFO] Booting worker with pid: 7
+[2025-12-04 07:40:10 +0000] [8] [INFO] Booting worker with pid: 8
+[2025-12-04 07:40:10 +0000] [9] [INFO] Booting worker with pid: 9
+[2025-12-04 07:40:10 +0000] [10] [INFO] Booting worker with pid: 10
+[2025-12-04 07:40:15 +0000] [10] [INFO] Started server process [10]
+[2025-12-04 07:40:15 +0000] [9] [INFO] Started server process [9]
+[2025-12-04 07:40:15 +0000] [8] [INFO] Started server process [8]
+[2025-12-04 07:40:15 +0000] [10] [INFO] Waiting for application startup.
+[2025-12-04 07:40:15 +0000] [9] [INFO] Waiting for application startup.
+[2025-12-04 07:40:15 +0000] [8] [INFO] Waiting for application startup.
+[2025-12-04 07:40:16 +0000] [7] [INFO] Started server process [7]
+[2025-12-04 07:40:16 +0000] [7] [INFO] Waiting for application startup.
+[2025-12-04 07:40:16 +0000] [8] [INFO] Application startup complete.
+[2025-12-04 07:40:16 +0000] [10] [INFO] Application startup complete.
+[2025-12-04 07:40:17 +0000] [7] [INFO] Application startup complete.
+[2025-12-04 07:40:17 +0000] [9] [INFO] Application startup complete.

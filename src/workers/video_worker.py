@@ -34,11 +34,12 @@ signal.signal(signal.SIGINT, signal_handler)
 
 
 async def _safe_refund(session: AsyncSession, user: User, task: Task, reason: str):
-    """Безопасный возврат генераций"""
+    """Безопасный возврат генераций - только при ошибках"""
     try:
         if task.status != TaskStatus.FAILED:
             return
         
+        # 🔥 ЭТО РЕАЛЬНЫЙ ВОЗВРАТ - баланс был списан при создании задачи
         await UserService.add_credits(
             session=session,
             user=user,
@@ -62,7 +63,7 @@ async def _check_cancel_flag(task_id: int) -> bool:
             db=settings.REDIS_DB_CACHE
         )
         cancel_flag = await redis.get(f"cancel_task:{task_id}")
-        await redis.aclose()
+        await redis.close()  # ← ИСПРАВЛЕНО с aclose()
         return cancel_flag is not None
     except Exception as e:
         logger.error(f"Check cancel error: {e}")
@@ -169,7 +170,7 @@ async def process_video_task(ctx: dict, task_id: int, user_telegram_id: int, vid
 
             # Шаг 2: Accept
             accept_resp = await topaz_client.accept_video_request(request_id)
-            upload_urls = accept_resp.get("uploadUrls", [])
+            upload_urls = accept_resp.get("urls", [])  # ← ИСПРАВЛЕНО с uploadUrls
             if not upload_urls:
                 raise TopazAPIError("No upload URLs", user_message="Не получены ссылки для загрузки")
 
@@ -275,8 +276,8 @@ async def process_video_task(ctx: dict, task_id: int, user_telegram_id: int, vid
             )
             
             try:
-                async with topaz_client._get_session() as session_dl:
-                    async with session_dl.get(download_url) as resp:
+                session_dl = await topaz_client._get_session()
+                async with session_dl.get(download_url) as resp:
                         if resp.status == 200:
                             result_data = await resp.read()
                         else:
@@ -288,18 +289,8 @@ async def process_video_task(ctx: dict, task_id: int, user_telegram_id: int, vid
             temp_output = disk_manager.save_temp_file(result_data, '.mp4')
             logger.info(f"Video downloaded: size={len(result_data)}, task={task_id}")
 
-            # Списание генераций
-            success = await UserService.deduct_credits(
-                session=session,
-                user=user,
-                amount=task.cost,
-                description=f"Обработка видео: {task.model}",
-                reference_type="task",
-                reference_id=task.id
-            )
-            
-            if not success:
-                raise TopazAPIError("Insufficient balance", user_message="Недостаточно генераций")
+            # 🔥 УБРАНО: deduct_credits - баланс УЖЕ списан при создании задачи!
+            # Просто отправляем результат пользователю
 
             # Отправка результата
             video_file = FSInputFile(temp_output)
@@ -335,6 +326,7 @@ async def process_video_task(ctx: dict, task_id: int, user_telegram_id: int, vid
             await session.flush()
             await session.commit()
 
+            # 🔥 ВОЗВРАТ - баланс был списан при создании, теперь возвращаем
             await _safe_refund(session, user, task, e.user_message or str(e))
 
             user_msg = e.user_message or "Ошибка обработки видео"
@@ -358,6 +350,7 @@ async def process_video_task(ctx: dict, task_id: int, user_telegram_id: int, vid
             await session.flush()
             await session.commit()
 
+            # 🔥 ВОЗВРАТ - баланс был списан при создании, теперь возвращаем
             await _safe_refund(session, user, task, "Внутренняя ошибка")
 
             await safe_send_text(
@@ -395,3 +388,4 @@ class WorkerSettings:
     keep_result = 3600
     on_startup = startup
     on_shutdown = shutdown
+    queue_name = "arq:video_queue"

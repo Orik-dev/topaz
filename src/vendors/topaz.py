@@ -156,7 +156,8 @@ class TopazClient:
         session = await self._get_session()
         try:
             async with session.patch(f"{self.video_url}/{request_id}/accept") as response:
-                if response.status == 200:
+                # 🔥 ИСПРАВЛЕНО: 202 - это УСПЕХ!
+                if response.status in [200, 202]:
                     return await response.json()
                 text = await response.text()
                 self._handle_error(response.status, text, "Accept video request")
@@ -182,7 +183,7 @@ class TopazClient:
         session = await self._get_session()
         try:
             async with session.patch(f"{self.video_url}/{request_id}/complete-upload", json={"uploadResults": upload_results}) as response:
-                if response.status == 200:
+                if response.status in [200, 202]:  # ← ДОБАВИТЬ 202!
                     return await response.json()
                 text = await response.text()
                 self._handle_error(response.status, text, "Complete video upload")
@@ -193,7 +194,7 @@ class TopazClient:
         session = await self._get_session()
         try:
             async with session.get(f"{self.video_url}/{request_id}/status") as response:
-                if response.status == 200:
+                if response.status in [200, 202]:
                     return await response.json()
                 text = await response.text()
                 self._handle_error(response.status, text, "Get video status")

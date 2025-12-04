@@ -47,7 +47,8 @@ class GenerationService:
             "process_image_task",
             task_id,
             user_telegram_id,
-            image_file_id
+            image_file_id,
+            _queue_name="arq:image_queue"  # ✅ УКАЗЫВАЕМ ОЧЕРЕДЬ
         )
         
         logger.info(f"Image task enqueued: task_id={task_id}")
@@ -61,7 +62,8 @@ class GenerationService:
             "process_video_task",
             task_id,
             user_telegram_id,
-            video_file_id
+            video_file_id,
+            _queue_name="arq:video_queue"  # ✅ УКАЗЫВАЕМ ОЧЕРЕДЬ
         )
         
         logger.info(f"Video task enqueued: task_id={task_id}")
