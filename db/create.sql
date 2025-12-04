@@ -6,11 +6,12 @@ CREATE TABLE IF NOT EXISTS users (
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     balance FLOAT DEFAULT 0.0 NOT NULL,
+    email VARCHAR(255) NULL,                    -- ✅ ДОБАВЛЕНО
+    receipt_opt_out INT DEFAULT 0,              -- ✅ ДОБАВЛЕНО
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_telegram_id (telegram_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 -- Credit Ledger table (история операций)
 CREATE TABLE IF NOT EXISTS credit_ledger (
     id INT AUTO_INCREMENT PRIMARY KEY,

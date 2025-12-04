@@ -9,6 +9,7 @@ from src.services.generation import GenerationService
 from src.services.pricing import IMAGE_MODELS
 from src.utils.file_validator import file_validator
 from src.services.rate_limiter import rate_limiter
+from src.services.telegram_safe import safe_send_text, safe_answer, safe_edit_text
 import logging
 
 logger = logging.getLogger(__name__)
@@ -19,15 +20,23 @@ router = Router()
 async def image_enhance_start(message: Message, state: FSMContext):
     """Начало улучшения фото"""
     await state.clear()
-    await message.answer(
+    
+    text = (
         "📸 <b>Отправьте фото для улучшения</b>\n\n"
         "⚠️ <b>Ограничения:</b>\n"
         "• Максимум 20 МБ\n"
         "• Форматы: JPG, PNG, WEBP\n\n"
-        "💡 Лучший результат с фото высокого качества",
+        "💡 Лучший результат с фото высокого качества"
+    )
+    
+    await safe_send_text(
+        bot=message.bot,
+        chat_id=message.chat.id,
+        text=text,
         reply_markup=cancel_keyboard(),
         parse_mode="HTML"
     )
+    
     await state.set_state(ImageStates.waiting_for_image)
 
 
@@ -45,9 +54,14 @@ async def image_received(message: Message, state: FSMContext, user: User):
     )
     
     if not allowed:
-        await message.answer(
+        text = (
             f"⏱ <b>Слишком много запросов</b>\n\n"
-            f"Подождите {remaining // 60} минут перед следующей загрузкой",
+            f"Подождите {remaining // 60} минут перед следующей загрузкой"
+        )
+        await safe_send_text(
+            bot=message.bot,
+            chat_id=message.chat.id,
+            text=text,
             parse_mode="HTML"
         )
         return
@@ -55,26 +69,41 @@ async def image_received(message: Message, state: FSMContext, user: User):
     # Валидация размера
     valid, error_msg = file_validator.validate_image_size(photo.file_size)
     if not valid:
-        await message.answer(f"❌ {error_msg}")
+        await safe_send_text(
+            bot=message.bot,
+            chat_id=message.chat.id,
+            text=f"❌ {error_msg}"
+        )
         return
     
     await state.update_data(file_id=photo.file_id)
     
-    await message.answer(
+    text = (
         "✅ <b>Фото принято</b>\n\n"
-        "Выберите модель обработки:",
+        "Выберите модель обработки:"
+    )
+    
+    await safe_send_text(
+        bot=message.bot,
+        chat_id=message.chat.id,
+        text=text,
         reply_markup=image_models_keyboard(),
         parse_mode="HTML"
     )
+    
     await state.set_state(ImageStates.selecting_model)
 
 
 @router.message(ImageStates.waiting_for_image)
 async def wrong_content_type(message: Message):
     """Неправильный тип контента"""
-    await message.answer(
-        "❌ Пожалуйста, отправьте фото\n\n"
-        "Поддерживаемые форматы: JPG, PNG, WEBP"
+    await safe_send_text(
+        bot=message.bot,
+        chat_id=message.chat.id,
+        text=(
+            "❌ Пожалуйста, отправьте фото\n\n"
+            "Поддерживаемые форматы: JPG, PNG, WEBP"
+        )
     )
 
 
@@ -89,25 +118,31 @@ async def process_image_model(
     model_name = callback.data.split(":")[1]
     
     if model_name not in IMAGE_MODELS:
-        await callback.answer("❌ Модель не найдена", show_alert=True)
+        await safe_answer(callback, "❌ Модель не найдена", show_alert=True)
         return
     
     model_info = IMAGE_MODELS[model_name]
     cost = model_info["cost"]
     
     if user.balance < cost:
-        await callback.answer(
-            f"❌ Недостаточно генераций! Требуется: {int(cost)}\n\nИспользуйте /buy",
+        await safe_answer(
+            callback,
+            f"❌ Недостаточно генераций!\n\nТребуется: {int(cost)}\nУ вас: {int(user.balance)}\n\nИспользуйте /buy",
             show_alert=True
         )
         await state.clear()
         return
     
-    await callback.message.edit_text(
+    text = (
         f"⏳ <b>Обработка началась...</b>\n\n"
         f"📊 Модель: {model_info['description']}\n"
         f"💰 Стоимость: {int(cost)} ген.\n\n"
-        f"Обычно занимает 10-30 секунд",
+        f"Обычно занимает 10-30 секунд"
+    )
+    
+    await safe_edit_text(
+        message=callback.message,
+        text=text,
         parse_mode="HTML"
     )
     
@@ -138,6 +173,6 @@ async def process_image_model(
     )
     
     await state.clear()
-    await callback.answer()
+    await safe_answer(callback)
     
     logger.info(f"Image task created: task_id={task.id}, user={user.telegram_id}, model={model_name}")

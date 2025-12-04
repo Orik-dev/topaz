@@ -1,82 +1,159 @@
+version: '3.8'
+
 services:
   redis:
     image: redis:7-alpine
     container_name: topaz_redis
-    restart: unless-stopped
-    command: redis-server --appendonly yes
+    restart: always
+    command: >
+      redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy allkeys-lru --save 900 1 --save 300 10 --save 60 10000
     volumes:
       - redis_data:/data
-    ports:
-      - "6379:6379"
     networks:
       - topaz_network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   bot:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: topaz_bot
-    restart: unless-stopped
+    restart: always
     env_file:
       - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MALLOC_TRIM_THRESHOLD_=100000
+      - WORKERS=4
     depends_on:
       redis:
         condition: service_healthy
     volumes:
       - ./logs:/app/logs
-      - ./src:/app/src
+      - temp_data:/app/temp_inputs
     ports:
       - "8000:8000"
     networks:
       - topaz_network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/healthz" ]
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
 
   image_worker:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: topaz_image_worker
-    restart: unless-stopped
+    restart: always
     command: [ "arq", "src.workers.image_worker.WorkerSettings" ]
     env_file:
       - .env
     environment:
       - PYTHONUNBUFFERED=1
+      - MALLOC_TRIM_THRESHOLD_=100000
     depends_on:
       redis:
         condition: service_healthy
     volumes:
       - ./logs:/app/logs
-      - ./src:/app/src
+      - temp_data:/app/temp_inputs
     networks:
       - topaz_network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
 
   video_worker:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: topaz_video_worker
-    restart: unless-stopped
+    restart: always
     command: [ "arq", "src.workers.video_worker.WorkerSettings" ]
     env_file:
       - .env
     environment:
       - PYTHONUNBUFFERED=1
+      - MALLOC_TRIM_THRESHOLD_=100000
     depends_on:
       redis:
         condition: service_healthy
     volumes:
       - ./logs:/app/logs
-      - ./src:/app/src
+      - temp_data:/app/temp_inputs
     networks:
       - topaz_network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 3G
+        reservations:
+          cpus: '1'
+          memory: 1.5G
 
 networks:
   topaz_network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
 
 volumes:
   redis_data:
+    driver: local
+  temp_data:
+    driver: local

@@ -16,6 +16,7 @@ class VideoStates(StatesGroup):
 class PaymentStates(StatesGroup):
     """Состояния для оплаты"""
     waiting_for_email = State()
+    entering_email = State()
 
 
 class BroadcastStates(StatesGroup):

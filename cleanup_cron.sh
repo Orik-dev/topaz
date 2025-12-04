@@ -1,19 +1,20 @@
 #!/bin/bash
-# Запускать каждые 10 минут через crontab: */10 * * * *
+# Cleanup temp files every 10 minutes
+# Add to crontab: */10 * * * * /path/to/cleanup_cron.sh >> /var/log/topaz_cleanup.log 2>&1
 
-docker exec topaz_bot python3 << 'EOF'
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+echo "[$(date)] Starting cleanup..."
+
+docker exec topaz_bot python3 -c "
 import sys
 sys.path.insert(0, '/app')
-
 from src.utils.file_manager import DiskManager
-import logging
+DiskManager.cleanup_old_files('/app/temp_inputs', 3600)
+print('Cleanup completed')
+" || echo "[$(date)] Cleanup failed"
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-try:
-    DiskManager.cleanup_old_files("/app/temp_inputs", max_age_seconds=3600)
-    logger.info("Cleanup completed")
-except Exception as e:
-    logger.error(f"Cleanup failed: {e}")
-EOF
+echo "[$(date)] Cleanup finished"

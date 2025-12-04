@@ -55,9 +55,10 @@ def payment_method_keyboard(package_id: str) -> InlineKeyboardMarkup:
 
 
 def email_keyboard(package_id: str) -> InlineKeyboardMarkup:
-    """Клавиатура ввода email (КАК В NANOBANANA!)"""
+    """Клавиатура выбора: нужен ли email для чека"""
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="📧 Чек не нужен", callback_data=f"no_receipt:{package_id}")],
+        [InlineKeyboardButton(text="📧 Да, отправить чек", callback_data=f"need_receipt:{package_id}")],
+        [InlineKeyboardButton(text="❌ Чек не нужен", callback_data=f"no_receipt:{package_id}")],
         [InlineKeyboardButton(text="◀️ Назад", callback_data=f"buy:{package_id}")],
     ])
 

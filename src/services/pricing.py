@@ -94,13 +94,13 @@ IMAGE_MODELS = {
     }
 }
 
-
-# ✅ Модели для видео
+# ✅ Увеличенные лимиты для больших видео
 VIDEO_MODELS = {
     "proteus_4x": {
         "description": "Proteus — 4K upscale",
         "cost_per_minute": 5.0,
         "output_fps": 30,
+        "max_duration_minutes": 10,  # ✅ до 10 минут
         "filters": [
             {
                 "model": "prob-4",
@@ -115,6 +115,7 @@ VIDEO_MODELS = {
         "description": "Apollo — 60 FPS",
         "cost_per_minute": 6.0,
         "output_fps": 60,
+        "max_duration_minutes": 8,  # ✅ до 8 минут (тяжелая обработка)
         "filters": [
             {
                 "model": "apo-8",
@@ -128,6 +129,7 @@ VIDEO_MODELS = {
         "description": "Artemis — denoise + sharpen",
         "cost_per_minute": 4.0,
         "output_fps": 30,
+        "max_duration_minutes": 10,
         "filters": [
             {
                 "model": "ahq-12",
@@ -140,6 +142,7 @@ VIDEO_MODELS = {
         "description": "Nyx — чистка от шума",
         "cost_per_minute": 3.0,
         "output_fps": 30,
+        "max_duration_minutes": 10,
         "filters": [
             {
                 "model": "nyx-3",

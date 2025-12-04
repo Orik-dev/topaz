@@ -7,9 +7,9 @@ import tempfile
 
 logger = logging.getLogger(__name__)
 
-MAX_VIDEO_SIZE = 100 * 1024 * 1024  # 100 MB
-MAX_IMAGE_SIZE = 20 * 1024 * 1024   # 20 MB
-MIN_FREE_DISK_GB = 5
+MAX_VIDEO_SIZE = 2 * 1024 * 1024 * 1024  # 2 GB
+MAX_IMAGE_SIZE = 20 * 1024 * 1024        # 20 MB
+MIN_FREE_DISK_GB = 10  # ✅ Увеличено для больших видео
 
 
 class DiskManager:
@@ -25,7 +25,7 @@ class DiskManager:
             return True
         except Exception as e:
             logger.error(f"Disk check error: {e}")
-            return True  # В случае ошибки разрешаем
+            return True
     
     @staticmethod
     def save_temp_file(data: bytes, suffix: str) -> Optional[str]:
@@ -69,19 +69,22 @@ class DiskManager:
             
             now = time.time()
             deleted = 0
+            freed_mb = 0
             
             for file_path in temp_dir.glob("*"):
                 if file_path.is_file():
                     age = now - file_path.stat().st_mtime
                     if age > max_age_seconds:
                         try:
+                            size_mb = file_path.stat().st_size / 1024 / 1024
                             file_path.unlink()
                             deleted += 1
+                            freed_mb += size_mb
                         except Exception as e:
                             logger.warning(f"Failed to delete {file_path}: {e}")
             
             if deleted > 0:
-                logger.info(f"Cleaned {deleted} old files from {directory}")
+                logger.info(f"Cleaned {deleted} files ({freed_mb:.1f} MB) from {directory}")
                 
         except Exception as e:
             logger.error(f"Cleanup error: {e}")

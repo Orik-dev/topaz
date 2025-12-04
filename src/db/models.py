@@ -28,9 +28,10 @@ class User(Base):
     first_name = Column(String(255), nullable=True)
     last_name = Column(String(255), nullable=True)
     balance = Column(Float, default=0.0, nullable=False)
+    email = Column(String(255), nullable=True)  # ✅ ДОБАВИТЬ
+    receipt_opt_out = Column(Integer, default=0)  # ✅ ДОБАВИТЬ (0=False, 1=True)
     created_at = Column(DateTime, default=func.now(), nullable=False)
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)
-
 
 class CreditLedger(Base):
     """История операций с генерациями"""

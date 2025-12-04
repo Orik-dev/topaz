@@ -5,9 +5,10 @@ logger = logging.getLogger(__name__)
 
 
 class FileValidator:
-    MAX_VIDEO_SIZE = 100 * 1024 * 1024  # 100 MB
-    MAX_IMAGE_SIZE = 20 * 1024 * 1024   # 20 MB
-    MAX_VIDEO_DURATION = 300  # 5 минут
+    # ✅ TELEGRAM LIMITS
+    MAX_VIDEO_SIZE = 2 * 1024 * 1024 * 1024  # 2 GB (Telegram API limit)
+    MAX_IMAGE_SIZE = 20 * 1024 * 1024        # 20 MB
+    MAX_VIDEO_DURATION = 600                  # 10 минут (увеличено)
     MIN_VIDEO_DURATION = 1
     
     @staticmethod
@@ -22,8 +23,8 @@ class FileValidator:
     def validate_video_size(file_size: int) -> Tuple[bool, Optional[str]]:
         """Валидация размера видео"""
         if file_size > FileValidator.MAX_VIDEO_SIZE:
-            max_mb = FileValidator.MAX_VIDEO_SIZE // 1024 // 1024
-            return False, f"Видео слишком большое (макс. {max_mb} МБ)"
+            max_gb = FileValidator.MAX_VIDEO_SIZE // 1024 // 1024 // 1024
+            return False, f"Видео слишком большое (макс. {max_gb} ГБ)"
         return True, None
     
     @staticmethod
