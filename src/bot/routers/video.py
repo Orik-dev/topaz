@@ -7,6 +7,10 @@ from src.bot.keyboards import video_models_keyboard, cancel_keyboard
 from src.bot.states import VideoStates
 from src.services.generation import GenerationService
 from src.services.pricing import VIDEO_MODELS
+from src.utils.file_validator import file_validator
+from src.services.rate_limiter import rate_limiter
+from src.core.config import settings
+import redis.asyncio as aioredis
 import logging
 
 logger = logging.getLogger(__name__)
@@ -16,28 +20,51 @@ router = Router()
 @router.message(F.text == "🎬 Улучшить видео")
 async def video_enhance_start(message: Message, state: FSMContext):
     """Начало улучшения видео"""
-    await state.clear()  # ✅ Очищаем состояние
+    await state.clear()
     await message.answer(
-        "🎬 Отправьте видео для улучшения\n\n"
-        "⚠️ Максимум 50 МБ, до 5 минут",
-        reply_markup=cancel_keyboard()
+        "🎬 <b>Отправьте видео для улучшения</b>\n\n"
+        "⚠️ <b>Ограничения:</b>\n"
+        "• Максимум 100 МБ\n"
+        "• До 5 минут длительности\n"
+        "• Форматы: MP4, MOV\n\n"
+        "💡 Для больших видео используйте компрессию",
+        reply_markup=cancel_keyboard(),
+        parse_mode="HTML"
     )
     await state.set_state(VideoStates.waiting_for_video)
 
 
 @router.message(VideoStates.waiting_for_video, F.video)
-async def video_received(message: Message, state: FSMContext):
-    """Видео получено - выбор модели"""
+async def video_received(message: Message, state: FSMContext, user: User):
+    """Видео получено - проверка и выбор модели"""
     video = message.video
     
-    # Проверяем размер
-    if video.file_size > 50 * 1024 * 1024:  # 50 МБ
-        await message.answer("❌ Файл слишком большой. Максимум 50 МБ")
+    # Проверка rate limit
+    allowed, remaining = await rate_limiter.check_limit(
+        user.telegram_id,
+        "video_upload",
+        3,  # 3 видео
+        3600  # в час
+    )
+    
+    if not allowed:
+        await message.answer(
+            f"⏱ <b>Слишком много запросов</b>\n\n"
+            f"Подождите {remaining // 60} минут перед следующей загрузкой",
+            parse_mode="HTML"
+        )
         return
     
-    # Проверяем длительность
-    if video.duration > 300:  # 5 минут
-        await message.answer("❌ Видео слишком длинное. Максимум 5 минут")
+    # Валидация размера
+    valid, error_msg = file_validator.validate_video_size(video.file_size)
+    if not valid:
+        await message.answer(f"❌ {error_msg}")
+        return
+    
+    # Валидация длительности
+    valid, error_msg = file_validator.validate_video_duration(video.duration)
+    if not valid:
+        await message.answer(f"❌ {error_msg}")
         return
     
     duration_minutes = max(1.0, video.duration / 60.0)
@@ -52,9 +79,13 @@ async def video_received(message: Message, state: FSMContext):
     )
     
     await message.answer(
-        f"🎬 Длительность: {duration_minutes:.1f} мин\n\n"
+        f"✅ <b>Видео принято</b>\n\n"
+        f"📊 Длительность: {duration_minutes:.1f} мин\n"
+        f"📐 Разрешение: {video.width}x{video.height}\n"
+        f"💾 Размер: {video.file_size // 1024 // 1024} МБ\n\n"
         f"Выберите модель обработки:",
-        reply_markup=video_models_keyboard()
+        reply_markup=video_models_keyboard(),
+        parse_mode="HTML"
     )
     await state.set_state(VideoStates.selecting_model)
 
@@ -62,7 +93,10 @@ async def video_received(message: Message, state: FSMContext):
 @router.message(VideoStates.waiting_for_video)
 async def wrong_content_type(message: Message):
     """Неправильный тип контента"""
-    await message.answer("❌ Пожалуйста, отправьте видео")
+    await message.answer(
+        "❌ Пожалуйста, отправьте видео\n\n"
+        "Поддерживаемые форматы: MP4, MOV"
+    )
 
 
 @router.callback_query(VideoStates.selecting_model, F.data.startswith("vid_model:"))
@@ -97,9 +131,13 @@ async def process_video_model(
         return
     
     await callback.message.edit_text(
-        f"⏳ Обработка началась...\n\n"
-        f"Это займет несколько минут.\n"
-        f"Мы пришлем результат когда всё будет готово."
+        f"🎬 <b>Обработка началась!</b>\n\n"
+        f"⏳ Это займет несколько минут.\n"
+        f"📊 Модель: {model_info['description']}\n"
+        f"💰 Стоимость: {cost} ген.\n\n"
+        f"Мы пришлем результат когда всё будет готово.\n"
+        f"Вы можете отменить обработку в любой момент.",
+        parse_mode="HTML"
     )
     
     file_id = data.get("file_id")
@@ -118,7 +156,8 @@ async def process_video_model(
                 "height": data.get("height", 720),
                 "duration": data.get("duration", 60),
                 "frameRate": 30,
-                "container": "mp4"
+                "container": "mp4",
+                "frameCount": int(data.get("duration", 60) * 30)
             },
             "output": {
                 "width": data.get("width", 1280) * 2,
@@ -126,7 +165,9 @@ async def process_video_model(
                 "frameRate": model_info.get("output_fps", 30),
                 "container": "mp4",
                 "audioCodec": "AAC",
-                "audioTransfer": "Copy"
+                "audioTransfer": "Copy",
+                "videoEncoder": "H264",
+                "dynamicCompressionLevel": "Mid"
             },
             "filters": model_info["filters"]
         }
@@ -144,3 +185,32 @@ async def process_video_model(
     await callback.answer()
     
     logger.info(f"Video task created: task_id={task.id}, user={user.telegram_id}, model={model_key}, cost={cost}")
+
+
+@router.callback_query(F.data.startswith("cancel_task:"))
+async def cancel_task_callback(callback: CallbackQuery):
+    """Отмена обработки"""
+    try:
+        task_id = int(callback.data.split(":")[1])
+        
+        # Устанавливаем флаг отмены
+        redis = await aioredis.Redis(
+            host=settings.REDIS_HOST,
+            port=settings.REDIS_PORT,
+            db=settings.REDIS_DB_CACHE
+        )
+        await redis.setex(f"cancel_task:{task_id}", 3600, "1")
+        await redis.aclose()
+        
+        await callback.message.edit_text(
+            "⏹ <b>Отмена обработки...</b>\n\n"
+            "Генерации будут возвращены автоматически.",
+            parse_mode="HTML"
+        )
+        await callback.answer("Обработка отменяется...")
+        
+        logger.info(f"User requested cancel: task={task_id}")
+        
+    except Exception as e:
+        logger.error(f"Cancel callback error: {e}")
+        await callback.answer("Ошибка отмены", show_alert=True)

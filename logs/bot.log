@@ -1,0 +1,402 @@
+2025-11-20 08:20:28,372 - src.web.server - INFO - Starting bot...
+2025-11-20 08:20:29,569 - src.web.server - INFO - Webhook set: https://5cfd79a6a0b7.ngrok-free.app/tg/webhook
+2025-11-20 08:21:11,155 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/start
+2025-11-20 08:21:22,333 - src.services.users - INFO - New user created: telegram_id=436680563, bonus=5.0
+2025-11-20 08:21:24,336 - src.bot.middlewares - INFO - Request processed in 13.181s
+2025-11-20 08:21:24,558 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/start
+2025-11-20 08:21:25,671 - src.bot.middlewares - INFO - Request processed in 1.113s
+2025-11-20 08:21:39,651 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=📸 Улучшить фото
+2025-11-20 08:21:41,329 - src.bot.middlewares - INFO - Request processed in 1.678s
+2025-11-20 08:22:01,252 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-11-20 08:22:02,795 - src.bot.middlewares - INFO - Request processed in 1.543s
+2025-11-20 08:22:10,809 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=img_model:enhance_standard
+2025-11-20 08:22:12,236 - src.services.generation - INFO - Image task enqueued: task_id=1
+2025-11-20 08:22:12,450 - src.bot.routers.image - INFO - Image task created: task_id=1, user=436680563, model=enhance_standard
+2025-11-20 08:22:12,452 - src.bot.middlewares - INFO - Request processed in 1.642s
+2025-11-20 08:23:42,508 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-11-20 08:23:46,096 - src.bot.middlewares - INFO - Request processed in 3.588s
+2025-11-20 08:25:06,582 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-11-20 08:25:08,116 - src.bot.middlewares - INFO - Request processed in 1.535s
+2025-11-20 08:25:35,189 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-11-20 08:25:39,413 - src.bot.middlewares - INFO - Request processed in 4.224s
+2025-11-20 08:25:48,057 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/buy
+2025-11-20 08:25:49,445 - src.bot.middlewares - INFO - Request processed in 1.388s
+2025-11-20 08:26:02,920 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=buy:small
+2025-11-20 08:26:04,390 - src.bot.middlewares - INFO - Request processed in 1.470s
+2025-11-20 08:26:05,392 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=pay_yoo:small
+2025-11-20 08:26:05,830 - src.bot.routers.payment - INFO - 💳 YooKassa payment initiated: user=436680563
+2025-11-20 08:26:06,952 - src.bot.middlewares - INFO - Request processed in 1.560s
+2025-11-20 08:26:07,658 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=no_receipt:small
+2025-11-20 08:26:08,094 - src.bot.routers.payment - INFO - 📧 No receipt requested: user=436680563
+2025-11-20 08:26:10,112 - src.services.payments - INFO - YooKassa payment created: user_id=1, payment_id=30b0e461-000f-5000-b000-1b0921416540, amount=99
+2025-11-20 08:26:10,701 - src.bot.routers.payment - INFO - ✅ YooKassa payment created (no receipt): user=436680563, amount=99
+2025-11-20 08:26:11,253 - src.bot.middlewares - INFO - Request processed in 3.595s
+2025-11-20 08:31:50,304 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=💰 Баланс
+2025-11-20 08:31:52,595 - src.bot.middlewares - INFO - Request processed in 2.290s
+2025-11-20 08:31:55,627 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=💳 Пополнить
+2025-11-20 08:31:56,814 - src.bot.middlewares - INFO - Request processed in 1.188s
+2025-11-20 08:31:59,041 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=buy:xlarge
+2025-11-20 08:32:00,661 - src.bot.middlewares - INFO - Request processed in 1.620s
+2025-11-20 08:32:01,936 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=pay_yoo:xlarge
+2025-11-20 08:32:02,372 - src.bot.routers.payment - INFO - 💳 YooKassa payment initiated: user=436680563
+2025-11-20 08:32:03,417 - src.bot.middlewares - INFO - Request processed in 1.481s
+2025-11-20 08:32:04,416 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=no_receipt:xlarge
+2025-11-20 08:32:04,854 - src.bot.routers.payment - INFO - 📧 No receipt requested: user=436680563
+2025-11-20 08:32:06,078 - src.services.payments - INFO - YooKassa payment created: user_id=1, payment_id=30b0e5c5-000f-5001-8000-184c02ecee8d, amount=599
+2025-11-20 08:32:06,870 - src.bot.routers.payment - INFO - ✅ YooKassa payment created (no receipt): user=436680563, amount=599
+2025-11-20 08:32:07,308 - src.bot.middlewares - INFO - Request processed in 2.892s
+2025-11-20 08:32:07,520 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=no_receipt:xlarge
+2025-11-20 08:32:07,958 - src.bot.routers.payment - INFO - 📧 No receipt requested: user=436680563
+2025-11-20 08:32:09,159 - src.services.payments - INFO - YooKassa payment created: user_id=1, payment_id=30b0e5c8-000f-5000-8000-17c8af55d558, amount=599
+2025-11-20 08:32:09,784 - src.bot.routers.payment - INFO - ✅ YooKassa payment created (no receipt): user=436680563, amount=599
+2025-11-20 08:32:10,219 - src.bot.middlewares - INFO - Request processed in 2.699s
+2025-11-20 08:33:46,698 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=💳 Пополнить
+2025-11-20 08:33:48,332 - src.bot.middlewares - INFO - Request processed in 1.634s
+2025-11-20 08:33:49,229 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=buy:small
+2025-11-20 08:33:50,557 - src.bot.middlewares - INFO - Request processed in 1.328s
+2025-11-20 08:33:50,871 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=pay_yoo:small
+2025-11-20 08:33:51,304 - src.bot.routers.payment - INFO - 💳 YooKassa payment initiated: user=436680563
+2025-11-20 08:33:52,163 - src.bot.middlewares - INFO - Request processed in 1.292s
+2025-11-20 08:33:53,401 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=no_receipt:small
+2025-11-20 08:33:53,841 - src.bot.routers.payment - INFO - 📧 No receipt requested: user=436680563
+2025-11-20 08:33:55,077 - src.services.payments - INFO - YooKassa payment created: user_id=1, payment_id=30b0e632-000f-5000-b000-14d895662036, amount=99
+2025-11-20 08:33:55,550 - src.bot.routers.payment - INFO - ✅ YooKassa payment created (no receipt): user=436680563, amount=99
+2025-11-20 08:33:55,987 - src.bot.middlewares - INFO - Request processed in 2.586s
+2025-11-20 08:37:55,236 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-11-20 08:37:57,148 - src.bot.middlewares - INFO - Request processed in 1.912s
+2025-11-20 08:38:45,087 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-11-20 08:38:46,768 - src.bot.middlewares - INFO - Request processed in 1.681s
+2025-11-20 08:38:54,822 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-11-20 08:38:56,167 - src.services.generation - INFO - Video task enqueued: task_id=2
+2025-11-20 08:38:56,369 - src.bot.routers.video - INFO - Video task created: task_id=2, user=436680563, model=proteus_4x, cost=5
+2025-11-20 08:38:56,369 - src.bot.middlewares - INFO - Request processed in 1.547s
+2025-11-20 08:44:22,689 - src.web.server - INFO - Stopping bot...
+2025-11-20 08:44:23,804 - src.web.server - INFO - Bot stopped
+2025-11-20 08:45:17,709 - src.web.server - INFO - Starting bot...
+2025-11-20 08:45:18,811 - src.web.server - INFO - Webhook set: https://5cfd79a6a0b7.ngrok-free.app/tg/webhook
+2025-11-20 08:45:33,602 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-11-20 08:45:45,513 - src.bot.middlewares - INFO - Request processed in 11.911s
+2025-11-20 08:46:36,061 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-11-20 08:46:37,683 - src.bot.middlewares - INFO - Request processed in 1.622s
+2025-11-20 08:46:41,234 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-11-20 08:46:42,628 - src.services.generation - INFO - Video task enqueued: task_id=3
+2025-11-20 08:46:42,856 - src.bot.routers.video - INFO - Video task created: task_id=3, user=436680563, model=proteus_4x, cost=5
+2025-11-20 08:46:42,857 - src.bot.middlewares - INFO - Request processed in 1.622s
+2025-11-20 08:48:01,008 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/buy
+2025-11-20 08:48:02,661 - src.bot.middlewares - INFO - Request processed in 1.653s
+2025-11-20 08:48:04,787 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=cancel
+2025-11-20 08:48:06,074 - src.bot.middlewares - INFO - Request processed in 1.287s
+2025-11-20 08:48:10,088 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/bots
+2025-11-20 08:48:11,346 - src.bot.middlewares - INFO - Request processed in 1.259s
+2025-11-20 08:48:22,098 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/broadcast
+2025-11-20 08:48:23,207 - src.bot.middlewares - INFO - Request processed in 1.109s
+2025-11-20 08:48:29,007 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=Тест
+2025-11-20 08:48:39,142 - src.bot.middlewares - INFO - Request processed in 10.135s
+2025-11-20 08:48:39,355 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/stats
+2025-11-20 08:48:41,312 - src.bot.middlewares - INFO - Request processed in 1.957s
+2025-11-20 08:48:48,633 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/stats
+2025-11-20 08:48:51,072 - src.bot.middlewares - INFO - Request processed in 2.439s
+2025-11-20 08:49:23,211 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/start
+2025-11-20 08:53:16,482 - src.bot.middlewares - INFO - Request processed in 233.271s
+2025-11-20 08:54:15,415 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=ℹ️ Помощь
+2025-11-20 08:54:23,722 - src.bot.middlewares - INFO - Request processed in 8.307s
+2025-11-20 08:55:50,949 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-11-20 08:55:52,794 - src.bot.middlewares - INFO - Request processed in 1.844s
+2025-11-20 08:56:50,564 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-11-20 08:56:52,835 - src.bot.middlewares - INFO - Request processed in 2.271s
+2025-11-20 08:56:54,356 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-11-20 08:56:55,933 - src.services.generation - INFO - Video task enqueued: task_id=4
+2025-11-20 08:56:56,229 - src.bot.routers.video - INFO - Video task created: task_id=4, user=436680563, model=proteus_4x, cost=5
+2025-11-20 08:56:56,229 - src.bot.middlewares - INFO - Request processed in 1.874s
+2025-11-20 09:05:47,952 - src.web.server - INFO - Stopping bot...
+2025-11-20 09:05:48,857 - src.web.server - INFO - Bot stopped
+2025-11-20 09:06:48,594 - src.web.server - INFO - Starting bot...
+2025-11-20 09:06:49,899 - src.web.server - INFO - Webhook set: https://5cfd79a6a0b7.ngrok-free.app/tg/webhook
+2025-11-20 09:06:51,498 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/start
+2025-11-20 09:07:02,294 - src.bot.middlewares - INFO - Request processed in 10.796s
+2025-11-20 09:07:02,517 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=🎬 Улучшить видео
+2025-11-20 09:07:03,717 - src.bot.middlewares - INFO - Request processed in 1.200s
+2025-11-20 09:07:14,069 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-11-20 09:07:15,221 - src.bot.middlewares - INFO - Request processed in 1.152s
+2025-11-20 09:07:16,550 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=vid_model:proteus_4x
+2025-11-20 09:07:18,629 - src.services.generation - INFO - Video task enqueued: task_id=5
+2025-11-20 09:07:18,877 - src.bot.routers.video - INFO - Video task created: task_id=5, user=436680563, model=proteus_4x, cost=5
+2025-11-20 09:07:18,879 - src.bot.middlewares - INFO - Request processed in 2.329s
+2025-11-20 09:07:56,959 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/buy
+2025-11-20 09:07:58,848 - src.bot.middlewares - INFO - Request processed in 1.889s
+2025-11-20 09:07:59,404 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/bots
+2025-11-20 09:08:00,745 - src.bot.middlewares - INFO - Request processed in 1.341s
+2025-11-20 09:08:01,318 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/help
+2025-11-20 09:08:02,863 - src.bot.middlewares - INFO - Request processed in 1.544s
+2025-11-20 10:36:17,882 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=/start
+2025-11-20 10:36:27,311 - src.bot.middlewares - INFO - Request processed in 9.429s
+2025-11-20 10:36:28,990 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=📸 Улучшить фото
+2025-11-20 10:36:30,619 - src.bot.middlewares - INFO - Request processed in 1.629s
+2025-11-20 10:36:43,013 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-11-20 10:36:44,227 - src.bot.middlewares - INFO - Request processed in 1.214s
+2025-11-20 10:36:53,186 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=img_model:enhance_high_fidelity
+2025-11-20 10:36:54,513 - src.services.generation - INFO - Image task enqueued: task_id=6
+2025-11-20 10:36:54,728 - src.bot.routers.image - INFO - Image task created: task_id=6, user=436680563, model=enhance_high_fidelity
+2025-11-20 10:36:54,729 - src.bot.middlewares - INFO - Request processed in 1.543s
+2025-11-20 10:38:07,153 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=📸 Улучшить фото
+2025-11-20 10:38:09,380 - src.bot.middlewares - ERROR - Error in handler, rolled back: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 992, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1113, in create_connection
+    transport, protocol = await self._create_connection_transport(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1146, in _create_connection_transport
+    await waiter
+  File "/usr/local/lib/python3.11/asyncio/sslproto.py", line 578, in _on_handshake_complete
+    raise handshake_exc
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 181, in make_request
+    async with session.post(
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/client.py", line 1187, in __aenter__
+    self._resp = await self._coro
+                 ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/client.py", line 574, in _request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 544, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 911, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1235, in _create_direct_connection
+    raise last_exc
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1204, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1000, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/src/bot/middlewares.py", line 32, in __call__
+    result = await handler(event, data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 95, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 136, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/app/src/bot/routers/image.py", line 20, in image_enhance_start
+    await message.answer(
+  File "/usr/local/lib/python3.11/site-packages/aiogram/methods/base.py", line 84, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/bot.py", line 487, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/base.py", line 254, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 188, in make_request
+    raise TelegramNetworkError(method=method, message=f"{type(e).__name__}: {e}")
+aiogram.exceptions.TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+2025-11-20 10:38:09,418 - src.bot.middlewares - ERROR - Error processing request (took 2.265s): HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 992, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1113, in create_connection
+    transport, protocol = await self._create_connection_transport(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1146, in _create_connection_transport
+    await waiter
+  File "/usr/local/lib/python3.11/asyncio/sslproto.py", line 578, in _on_handshake_complete
+    raise handshake_exc
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 181, in make_request
+    async with session.post(
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/client.py", line 1187, in __aenter__
+    self._resp = await self._coro
+                 ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/client.py", line 574, in _request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 544, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 911, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1235, in _create_direct_connection
+    raise last_exc
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1204, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1000, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/src/bot/middlewares.py", line 176, in __call__
+    result = await handler(event, data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 256, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 32, in __call__
+    result = await handler(event, data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 95, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 136, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/app/src/bot/routers/image.py", line 20, in image_enhance_start
+    await message.answer(
+  File "/usr/local/lib/python3.11/site-packages/aiogram/methods/base.py", line 84, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/bot.py", line 487, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/base.py", line 254, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 188, in make_request
+    raise TelegramNetworkError(method=method, message=f"{type(e).__name__}: {e}")
+aiogram.exceptions.TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+2025-11-20 10:38:09,420 - src.bot.middlewares - ERROR - Unhandled error: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 992, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1113, in create_connection
+    transport, protocol = await self._create_connection_transport(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1146, in _create_connection_transport
+    await waiter
+  File "/usr/local/lib/python3.11/asyncio/sslproto.py", line 578, in _on_handshake_complete
+    raise handshake_exc
+ConnectionResetError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 181, in make_request
+    async with session.post(
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/client.py", line 1187, in __aenter__
+    self._resp = await self._coro
+                 ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/client.py", line 574, in _request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 544, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 911, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1235, in _create_direct_connection
+    raise last_exc
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1204, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiohttp/connector.py", line 1000, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/src/bot/middlewares.py", line 299, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 174, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 174, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/event/telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 176, in __call__
+    result = await handler(event, data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 256, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 32, in __call__
+    result = await handler(event, data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 95, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/src/bot/middlewares.py", line 136, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/app/src/bot/routers/image.py", line 20, in image_enhance_start
+    await message.answer(
+  File "/usr/local/lib/python3.11/site-packages/aiogram/methods/base.py", line 84, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/bot.py", line 487, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/base.py", line 254, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 188, in make_request
+    raise TelegramNetworkError(method=method, message=f"{type(e).__name__}: {e}")
+aiogram.exceptions.TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+2025-11-20 10:38:13,077 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=📸 Улучшить фото
+2025-11-20 10:38:14,254 - src.bot.middlewares - INFO - Request processed in 1.177s
+2025-11-20 10:38:24,939 - src.bot.middlewares - INFO - Message received: user_id=436680563, chat_id=436680563, text=<no text>
+2025-11-20 10:38:26,098 - src.bot.middlewares - INFO - Request processed in 1.159s
+2025-11-20 10:38:30,231 - src.bot.middlewares - INFO - Callback received: user_id=436680563, data=img_model:enhance_standard
+2025-11-20 10:38:32,112 - src.services.generation - INFO - Image task enqueued: task_id=7
+2025-11-20 10:38:32,343 - src.bot.routers.image - INFO - Image task created: task_id=7, user=436680563, model=enhance_standard
+2025-11-20 10:38:32,344 - src.bot.middlewares - INFO - Request processed in 2.113s
+2025-12-03 18:19:08,671 - src.web.server - INFO - Starting bot...
+2025-12-03 18:19:09,833 - src.web.server - INFO - Webhook уже установлен: https://5cfd79a6a0b7.ngrok-free.app/tg/webhook
+2025-12-03 18:19:27,223 - src.web.server - INFO - Stopping bot...
+2025-12-03 18:19:28,256 - src.web.server - INFO - Bot stopped

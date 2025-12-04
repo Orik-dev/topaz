@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     REDIS_HOST: str = "redis"
     REDIS_PORT: int = 6379
     REDIS_DB: int = 0
+    REDIS_DB_FSM: int = 1
+    REDIS_DB_CACHE: int = 2
 
     TOPAZ_API_KEY: str
     TOPAZ_IMAGE_API_URL: str = "https://api.topazlabs.com/image/v1"
